@@ -63,6 +63,9 @@ function Login({ setUser, t, API_URL }) {
           {t('no_account')}{' '}
           <Link to="/register">{t('register')}</Link>
         </p>
+        <p className="auth-footer" style={{ marginTop: 8 }}>
+          <Link to="/forgot-password" style={{ fontSize: '0.85rem' }}>{t('reset_password')}</Link>
+        </p>
       </div>
     </div>
   );

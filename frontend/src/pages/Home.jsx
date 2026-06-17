@@ -12,6 +12,7 @@ function Home({ user, language, t, API_URL }) {
   const [error, setError] = useState('');
   const [showConfetti, setShowConfetti] = useState(false);
   const [gifUrl, setGifUrl] = useState('');
+  const giphyKey = import.meta.env.VITE_GIPHY_API_KEY || '';
   const [showDonation, setShowDonation] = useState(localStorage.getItem('hideDonation') !== 'true');
 
   useEffect(() => {
@@ -81,19 +82,21 @@ function Home({ user, language, t, API_URL }) {
       setResult(response.data.decision);
       setShowConfetti(true);
       
-      try {
-        const gifResponse = await axios.get('https://api.giphy.com/v1/gifs/random', {
-          params: {
-            api_key: 'YOUR_GIPHY_API_KEY',
-            tag: 'happy celebration',
-            rating: 'g'
+      if (giphyKey) {
+        try {
+          const gifResponse = await axios.get('https://api.giphy.com/v1/gifs/random', {
+            params: {
+              api_key: giphyKey,
+              tag: 'happy celebration',
+              rating: 'g'
+            }
+          });
+          if (gifResponse.data.data) {
+            setGifUrl(gifResponse.data.data.images.fixed_height.url);
           }
-        });
-        if (gifResponse.data.data) {
-          setGifUrl(gifResponse.data.data.images.fixed_height.url);
+        } catch (gifError) {
+          setGifUrl('');
         }
-      } catch (gifError) {
-        setGifUrl('');
       }
       
     } catch (err) {
@@ -204,7 +207,7 @@ function Home({ user, language, t, API_URL }) {
             <div className="result-option">✨ {result.result} ✨</div>
             <p className="result-reason">💡 {result.reason}</p>
             <div className="result-actions">
-              <button onClick={() => window.location.reload()} className="spin-again">
+              <button onClick={() => { setResult(null); setGifUrl(''); setQuestion(''); setOptions(['', '']); setListOptions(['', '']); }} className="spin-again">
                 🎰 {t('spin_again')}
               </button>
               <button onClick={copyToClipboard} className="share-btn">

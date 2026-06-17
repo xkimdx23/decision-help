@@ -13,6 +13,6 @@ router.get('/decisions/public', decisionController.getPublicDecisions);
 // Protected routes
 router.get('/decisions/history', authMiddleware, decisionController.getHistory);
 router.delete('/decisions/:id', authMiddleware, decisionController.deleteDecision);
-router.post('/decisions/:id/like', decisionController.likeDecision);
+router.post('/decisions/:id/like', authMiddleware, decisionController.likeDecision);
 
 module.exports = router;

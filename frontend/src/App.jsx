@@ -9,6 +9,7 @@ import History from './pages/History';
 import Profile from './pages/Profile';
 import Community from './pages/Community';
 import About from './pages/About';
+import ForgotPassword from './pages/ForgotPassword';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import Navbar from './components/Navbar';
 
@@ -97,6 +98,7 @@ function App() {
             <Route path="/profile" element={user ? <Profile user={user} setUser={setUser} language={language} t={t} API_URL={API_URL} /> : <Navigate to="/login" />} />
             <Route path="/community" element={<Community language={language} t={t} API_URL={API_URL} />} />
             <Route path="/about" element={<About language={language} t={t} />} />
+            <Route path="/forgot-password" element={<ForgotPassword t={t} API_URL={API_URL} />} />
             <Route path="/verify-email/:token" element={<VerifyEmail API_URL={API_URL} t={t} />} />
             <Route path="/reset-password/:token" element={<ResetPassword API_URL={API_URL} t={t} />} />
           </Routes>

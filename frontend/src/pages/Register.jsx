@@ -6,6 +6,7 @@ function Register({ setUser, t, API_URL }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +15,11 @@ function Register({ setUser, t, API_URL }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
     setLoading(true);
 
     try {
@@ -68,6 +74,17 @@ function Register({ setUser, t, API_URL }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="•••••• (min 6 chars)"
+              required
+              minLength={6}
+            />
+          </div>
+          <div className="form-group">
+            <label>{t('confirmPassword')}</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="••••••"
               required
               minLength={6}
             />

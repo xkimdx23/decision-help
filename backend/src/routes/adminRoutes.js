@@ -4,10 +4,8 @@ const authMiddleware = require('../middleware/auth');
 const Report = require('../models/Report');
 const Translation = require('../models/Translation');
 
-// Simple admin check (in production, add proper admin role)
 const isAdmin = async (req, res, next) => {
-  // For demo, check if email is admin email
-  if (req.user && req.user.email === process.env.ADMIN_EMAIL) {
+  if (req.user && (req.user.role === 'admin' || req.user.email === process.env.ADMIN_EMAIL)) {
     next();
   } else {
     res.status(403).json({ error: 'Admin access required' });

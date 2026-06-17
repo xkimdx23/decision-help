@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
     default: 'en',
     enum: ['en', 'es', 'fr', 'de', 'it', 'pt', 'nl', 'ru', 'ja', 'ko', 'zh', 'ar']
   },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
   is_verified: {
     type: Boolean,
     default: false
