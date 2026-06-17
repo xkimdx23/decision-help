@@ -215,7 +215,7 @@ function Home({ user, language, t, API_URL }) {
         </div>
       )}
 
-      {result && <AdUnit slot="xxxxxxxxx" />}
+      {result && <AdUnit slot="7401516863" />}
 
       {showDonation && (
         <div className="donation-card">
@@ -238,7 +238,7 @@ function Home({ user, language, t, API_URL }) {
         </div>
       )}
 
-      <AdUnit slot="xxxxxxxxx" />
+      <AdUnit slot="4690463740" />
     </div>
   );
 }
