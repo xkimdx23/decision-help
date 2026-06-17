@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import ReactGA from 'react-ga4';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -16,6 +17,20 @@ import Navbar from './components/Navbar';
 import translations from './translations';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api';
+const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+if (GA_ID) {
+  ReactGA.initialize(GA_ID);
+}
+
+function PageViewTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    if (GA_ID) {
+      ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+    }
+  }, [location]);
+  return null;
+}
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
@@ -78,6 +93,7 @@ function App() {
 
   return (
     <Router>
+      <PageViewTracker />
       <div className="app">
         <Navbar 
           user={user} 
