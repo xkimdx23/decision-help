@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Help — Decision Assistant</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxx" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#f0f2fe;--bg-card:#ffffff;--text:#1a1a2e;--text-secondary:#5a5a7a;
+            --text-muted:#a0a0b8;--primary:#6c5ce7;--primary-dark:#5a4bd1;--primary-light:#a29bfe;
+            --accent:#fd79a8;--gradient:linear-gradient(135deg,#6c5ce7,#fd79a8);
+            --success:#00b894;--warning:#fdcb6e;--danger:#e17055;
+            --shadow-sm:0 1px 3px rgba(108,92,231,0.08);
+            --shadow:0 4px 20px rgba(108,92,231,0.10);
+            --shadow-lg:0 10px 40px rgba(108,92,231,0.15);
+            --radius-sm:8px;--radius:16px;--radius-lg:24px;
+            --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+            --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --navbar-bg:rgba(255,255,255,0.80);
+            --navbar-border:rgba(108,92,231,0.08);
+        }
+        .dark{
+            --bg:#0a0a1a;--bg-card:#1a1a2e;--text:#e8e8f0;--text-secondary:#9898b8;
+            --text-muted:#5a5a7a;--shadow-sm:0 1px 3px rgba(0,0,0,0.3);
+            --shadow:0 4px 20px rgba(0,0,0,0.4);--shadow-lg:0 10px 40px rgba(0,0,0,0.5);
+            --navbar-bg:rgba(10,10,26,0.80);--navbar-border:rgba(255,255,255,0.06);
+        }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:var(--font);background:var(--bg);color:var(--text);
+            min-height:100vh;transition:background var(--transition),color var(--transition);
+            line-height:1.6;-webkit-font-smoothing:antialiased;
+        }
+        .navbar{
+            background:var(--navbar-bg);backdrop-filter:blur(20px) saturate(180%);
+            -webkit-backdrop-filter:blur(20px) saturate(180%);
+            border-bottom:1px solid var(--navbar-border);
+            padding:0 32px;height:64px;display:flex;justify-content:space-between;
+            align-items:center;position:sticky;top:0;z-index:100;
+            transition:background var(--transition);
+        }
+        .nav-brand{font-size:1.25rem;font-weight:800;cursor:pointer;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px}
+        .nav-links{display:flex;align-items:center;gap:6px}
+        .nav-links a,.nav-links button{
+            background:none;border:none;font-family:var(--font);font-size:0.875rem;
+            font-weight:500;cursor:pointer;padding:8px 16px;border-radius:50px;
+            color:var(--text-secondary);text-decoration:none;transition:all var(--transition);
+        }
+        .nav-links a:hover,.nav-links button:hover{background:rgba(108,92,231,0.08);color:var(--primary)}
+        .icon-btn{font-size:1.2rem;padding:8px 10px!important;line-height:1}
+        .container{max-width:680px;margin:0 auto;padding:40px 20px 80px}
+        .card{
+            background:var(--bg-card);border-radius:var(--radius-lg);padding:36px;
+            margin-bottom:24px;box-shadow:var(--shadow);
+            transition:box-shadow var(--transition),transform var(--transition);
+        }
+        .card:hover{box-shadow:var(--shadow-lg)}
+        .page-title{text-align:center;font-size:2.8rem;font-weight:800;margin-bottom:8px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.5px}
+        .page-subtitle{text-align:center;color:var(--text-secondary);margin-bottom:36px;font-size:1.05rem}
+        .mode-group{display:flex;justify-content:center;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+        .mode-btn{
+            padding:10px 22px;font-family:var(--font);font-size:0.875rem;font-weight:500;
+            border:1.5px solid rgba(108,92,231,0.12);border-radius:50px;
+            background:var(--bg-card);color:var(--text-secondary);cursor:pointer;
+            transition:all var(--transition);
+        }
+        .mode-btn:hover{border-color:var(--primary-light);color:var(--primary);transform:translateY(-1px)}
+        .mode-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(108,92,231,0.25)}
+        .field{margin-bottom:20px;text-align:left}
+        .field label{display:block;margin-bottom:6px;font-weight:600;font-size:0.875rem;color:var(--text)}
+        .field input,.field select{
+            width:100%;padding:14px 18px;border:1.5px solid rgba(108,92,231,0.12);
+            border-radius:var(--radius-sm);font-family:var(--font);font-size:0.95rem;
+            background:var(--bg);color:var(--text);outline:none;
+            transition:border-color var(--transition),box-shadow var(--transition);
+        }
+        .field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(108,92,231,0.12)}
+        .field input::placeholder{color:var(--text-secondary);opacity:0.5}
+        .opt-row{display:flex;gap:10px;margin-bottom:10px}
+        .opt-row input{flex:1;padding:12px 16px;border:1.5px solid rgba(108,92,231,0.12);border-radius:var(--radius-sm);font-family:var(--font);font-size:0.95rem;background:var(--bg);color:var(--text);outline:none;transition:border-color var(--transition)}
+        .opt-row input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(108,92,231,0.12)}
+        .opt-remove{background:var(--danger);color:#fff;border:none;width:44px;border-radius:var(--radius-sm);cursor:pointer;font-size:1.2rem;transition:opacity var(--transition)}
+        .opt-remove:hover{opacity:0.85}
+        .add-opt{background:none;color:var(--primary);border:1.5px dashed rgba(108,92,231,0.25);padding:10px 20px;border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font);font-size:0.85rem;font-weight:500;margin-top:4px;transition:all var(--transition)}
+        .add-opt:hover{border-color:var(--primary);background:rgba(108,92,231,0.04)}
+        .btn-primary{
+            background:var(--gradient);color:#fff;padding:16px 28px;
+            font-family:var(--font);font-size:1rem;font-weight:600;border:none;
+            border-radius:50px;cursor:pointer;width:100%;
+            transition:all var(--transition);letter-spacing:-0.2px;
+            display:flex;align-items:center;justify-content:center;gap:10px;
+        }
+        .btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,92,231,0.35)}
+        .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+        .btn-secondary{
+            padding:10px 22px;border:1.5px solid rgba(108,92,231,0.12);border-radius:50px;
+            background:var(--bg-card);color:var(--text-secondary);font-family:var(--font);
+            font-size:0.875rem;font-weight:500;cursor:pointer;transition:all var(--transition);
+        }
+        .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+        .result-card{
+            margin-top:24px;background:var(--gradient);border-radius:var(--radius-lg);
+            padding:40px;text-align:center;overflow:hidden;
+            animation:fadeUp 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .result-badge{font-size:0.75rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:8px}
+        .result-choice{font-size:2rem;font-weight:800;color:#fff;margin:12px 0;letter-spacing:-0.5px;line-height:1.3}
+        .result-reason{font-size:1rem;color:rgba(255,255,255,0.9);line-height:1.7;margin-bottom:24px}
+        .result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+        .result-actions button{
+            padding:12px 24px;border:1px solid rgba(255,255,255,0.2);border-radius:50px;
+            cursor:pointer;font-family:var(--font);font-size:0.85rem;font-weight:600;
+            background:rgba(255,255,255,0.12);color:#fff;
+            transition:all var(--transition);backdrop-filter:blur(4px);
+        }
+        .result-actions button:hover{background:rgba(255,255,255,0.25);transform:translateY(-1px)}
+        .badge{
+            display:inline-block;font-size:0.7rem;font-weight:600;padding:3px 10px;
+            border-radius:50px;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;
+        }
+        .badge-ai{background:rgba(255,255,255,0.2);color:#fff}
+        .badge-smart{background:rgba(108,92,231,0.12);color:var(--primary)}
+        .thinking{
+            display:flex;flex-direction:column;align-items:center;gap:16px;padding:40px;
+        }
+        .spinner{width:40px;height:40px;border:3px solid rgba(108,92,231,0.12);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .thinking-text{color:var(--text-secondary);font-size:0.95rem;font-weight:500}
+        .dots::after{content:'';animation:dots 1.5s steps(4) infinite}
+        @keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}100%{content:''}}
+        .error-box{background:rgba(225,112,85,0.1);border:1px solid rgba(225,112,85,0.2);color:var(--danger);padding:16px 20px;border-radius:var(--radius-sm);margin-top:20px;text-align:center;font-size:0.9rem;font-weight:500}
+        .voice-btn{
+            background:none;border:1.5px solid rgba(108,92,231,0.12);border-radius:50px;
+            padding:8px 14px;cursor:pointer;font-size:1.1rem;color:var(--text-secondary);
+            transition:all var(--transition);margin-left:8px;
+        }
+        .voice-btn:hover{border-color:var(--primary);color:var(--primary)}
+        .voice-btn.listening{background:var(--danger);border-color:var(--danger);color:#fff;animation:pulse 1s infinite}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+        .input-row{display:flex;gap:0}
+        .input-row input{flex:1}
+        .history-item{
+            background:var(--bg-card);border-radius:var(--radius);padding:20px 24px;
+            margin-bottom:12px;box-shadow:var(--shadow-sm);
+            transition:box-shadow var(--transition);
+        }
+        .history-item:hover{box-shadow:var(--shadow)}
+        .history-q{font-weight:600;font-size:0.95rem;margin-bottom:4px;color:var(--primary)}
+        .history-r{font-size:1.1rem;font-weight:600;color:var(--success);margin-bottom:4px}
+        .history-why{color:var(--text-secondary);font-size:0.9rem}
+        .history-when{color:var(--text-muted);font-size:0.8rem;margin-top:8px}
+        .empty-state{text-align:center;padding:40px 20px;color:var(--text-secondary)}
+        .empty-icon{font-size:3rem;margin-bottom:12px}
+        .hidden{display:none!important}
+        .footer{text-align:center;padding:24px 20px;color:var(--text-muted);font-size:0.8rem;border-top:1px solid rgba(108,92,231,0.06)}
+        .ad-container{max-width:728px;margin:24px auto;text-align:center;overflow:hidden;min-height:90px}
+        .ad-label{display:block;font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;opacity:0.6}
+        .disclaimer-bar{text-align:center;padding:10px 20px 20px;font-size:0.7rem;color:var(--text-muted);line-height:1.5}
+        .disclaimer-bar p{max-width:680px;margin:0 auto}
+        .donation-card-inline{text-align:center;padding:28px 20px 14px;max-width:640px;margin:0 auto}
+        .donation-card-inline h3{font-size:1.1rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+        .donation-card-inline p{color:var(--text-secondary);font-size:0.9rem;margin-bottom:18px;line-height:1.6}
+        .donation-form .donation-amount-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+        .donation-currency{font-size:1.2rem;font-weight:700;color:var(--text)}
+        .donation-amount-input{width:90px;padding:10px 12px;font-size:1rem;font-family:'Inter',sans-serif;border:2px solid rgba(108,92,231,0.15);border-radius:8px;background:var(--bg);color:var(--text);text-align:center;outline:none;transition:border-color .3s}
+        .donation-amount-input:focus{border-color:#6c5ce7}
+        .donation-button{display:inline-block;padding:12px 28px;background:#FF813F;color:#fff;font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:600;border:none;border-radius:50px;cursor:pointer;text-decoration:none;transition:all var(--transition)}
+        .donation-button:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(255,129,63,0.35)}
+        @media(max-width:768px){
+            .navbar{padding:0 16px;height:56px}
+            .nav-brand{font-size:1.1rem}
+            .nav-links a:not(.nav-highlight){display:none}
+            .container{padding:24px 16px 60px}
+            .card{padding:24px}
+            .page-title{font-size:2rem}
+            .result-choice{font-size:1.5rem}
+            .result-card{padding:28px}
+        }
+        @media(max-width:480px){
+            .mode-btn{font-size:0.8rem;padding:8px 16px}
+            .result-actions{flex-direction:column}
+            .result-actions button{width:100%}
+        }
+        [dir=rtl]{direction:rtl;text-align:right}
+        .fade-in{animation:fadeUp 0.4s ease}
+        .mt-4{margin-top:16px}
+        .gap-2{gap:8px}
+        .auth-card{max-width:440px;margin:0 auto}
+        .auth-switch{text-align:center;margin-top:20px;color:var(--text-secondary);font-size:0.9rem}
+        .auth-switch a{color:var(--primary);text-decoration:none;font-weight:600;cursor:pointer}
+        .auth-switch a:hover{text-decoration:underline}
+        .profile-info{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px 0}
+        .profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;font-weight:700}
+        .profile-name{font-size:1.4rem;font-weight:700}
+        .profile-detail{color:var(--text-secondary);font-size:0.9rem}
+        .nav-auth{display:flex;align-items:center;gap:6px;margin-left:auto}
+        .nav-user{font-size:0.8rem;color:var(--text-secondary);padding:4px 8px;opacity:0.7}
+        .btn-auth{background:none;border:none;font-family:var(--font);font-size:0.875rem;font-weight:500;cursor:pointer;padding:8px 14px;border-radius:50px;color:var(--text-secondary);text-decoration:none;transition:all var(--transition)}
+        .btn-auth:hover{background:rgba(108,92,231,0.08);color:var(--primary)}
+        .btn-auth-primary{background:var(--gradient)!important;color:#fff!important;padding:8px 18px!important}
+        .btn-auth-primary:hover{box-shadow:0 4px 14px rgba(108,92,231,0.35)!important}
+        .auth-error{background:rgba(225,112,85,0.1);border:1px solid rgba(225,112,85,0.2);color:var(--danger);padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:16px;text-align:center;font-size:0.85rem;font-weight:500}
+        .auth-success{background:rgba(0,184,148,0.1);border:1px solid rgba(0,184,148,0.2);color:var(--success);padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:16px;text-align:center;font-size:0.85rem;font-weight:500}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Decision Help</div>
+        <div class="nav-links">
+            <a href="#" onclick="showView('home')" id="nav-home" data-key="navHome">Home</a>
+            <a href="#" onclick="showView('history')" id="nav-history" data-key="navHistory">History</a>
+            <div class="nav-auth" id="navAuth"></div>
+            <select id="langSelect" onchange="setLang(this.value)" style="background:none;border:1px solid rgba(108,92,231,0.12);border-radius:50px;padding:6px 10px;font-family:var(--font);font-size:0.8rem;color:var(--text-secondary);cursor:pointer;outline:none">
+                <option value="en">EN</option><option value="es">ES</option><option value="fr">FR</option><option value="de">DE</option><option value="it">IT</option><option value="pt">PT</option><option value="ar">AR</option><option value="ja">JA</option><option value="ko">KO</option><option value="zh">ZH</option>
+            </select>
+            <button class="icon-btn" onclick="toggleDark()" id="darkBtn" title="Toggle dark mode">🌙</button>
+        </div>
+    </nav>
+
+    <div id="app"></div>
+    <div class="footer" id="footerText"></div>
+    <div class="donation-card-inline">
+      <h3>Support Decision Help</h3>
+      <p>If you find this tool useful, consider supporting its development. Completely optional — the app will always be free.</p>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" rel="noopener noreferrer" class="donation-form">
+        <input type="hidden" name="cmd" value="_xclick" />
+        <input type="hidden" name="business" value="gasmimohamed067@gmail.com" />
+        <input type="hidden" name="item_name" value="Support Decision Help" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <input type="hidden" name="no_note" value="0" />
+        <div class="donation-amount-row">
+          <span class="donation-currency">$</span>
+          <input type="number" name="amount" min="1" step="any" placeholder="5" class="donation-amount-input" required />
+          <button type="submit" class="donation-button">☕ Donate with PayPal</button>
+        </div>
+      </form>
+    </div>
+    <div class="disclaimer-bar">
+      <p>This tool is for informational and entertainment purposes only. We are not responsible for any decisions made using this service. Always use your own judgment.</p>
+    </div>
+
+    <script>
+        // ─── SAFE STORAGE ───
+        var store = {};
+        function ls(){try{localStorage.setItem('_w_','1');localStorage.removeItem('_w_');return localStorage}catch(e){return{getItem:function(k){return store[k]||null},setItem:function(k,v){store[k]=String(v)},removeItem:function(k){delete store[k]}}}}
+        var LS = ls();
+
+        // ─── LANGUAGES ───
+        var lang = {
+            en:{navHome:'Home',navHistory:'History',title:"What's your question?",subtitle:'Get clarity on any choice, big or small',modeThisOrThat:'This or That',modeYesNo:'Yes or No',modePickList:'Pick from List',yourQuestion:'Your Question',placeholder:'e.g., Should I learn guitar or piano?',optionA:'Option A',optionB:'Option B',firstOption:'First option',secondOption:'Second option',decide:'Decide',yesNoSimple:'Yes · No — simple and clear.',addOption:'+ Add Option',option:'Option',thinking:'Thinking',aiEngine:'AI Engine',yourDecision:'Your Decision',askAgain:'Ask Again',share:'Share',copied:'Copied to clipboard!',historyTitle:'History',yourPastDecisions:'Your past decisions',noDecisions:'No decisions yet. Make your first one!',footer:'Decision Help — AI-powered decisions',voiceNotSupported:'Voice input is not supported in your browser',pleaseEnterQuestion:'Please enter your question',pleaseEnterBoth:'Please enter both options',pleaseEnterAtLeast:'Please enter at least 2 options',blockedQuestion:'We do not accept: violence, self-harm, adult/+18 content, drugs, hate speech, illegal activities, profanity, or anything harmful. Please ask about hobbies, learning, relationships, career, health, travel, or fun topics.',blockedOption:'We do not accept: violence, adult/+18 content, drugs, hate speech, or anything harmful. Please use positive options only.',somethingWentWrong:'Something went wrong:',speakQuestion:'Speak your question',navLogin:'Login',navRegister:'Register',navProfile:'Profile',navLogout:'Logout',loginTitle:'Welcome Back',loginSubtitle:'Sign in to your account',registerTitle:'Create Account',registerSubtitle:'Join Decision Help today',username:'Username',email:'Email',password:'Password',confirmPassword:'Confirm Password',loginBtn:'Sign In',registerBtn:'Create Account',logoutBtn:'Sign Out',alreadyHaveAccount:'Already have an account?',noAccountYet:"Don't have an account?",registerSuccess:'Account created! You are now signed in.',loginSuccess:'Signed in successfully!',fillAllFields:'Please fill all fields',passwordsDontMatch:'Passwords do not match',emailInvalid:'Please enter a valid email',userExists:'An account with this email already exists',userNotFound:'No account found with this email',wrongPassword:'Incorrect password',profileGreeting:'Hello',memberSince:'Member since'},
+            es:{navHome:'Inicio',navHistory:'Historial',title:'¿Cuál es tu pregunta?',subtitle:'Obtén claridad en cualquier decisión',modeThisOrThat:'Esto o Aquello',modeYesNo:'Sí o No',modePickList:'Elige de la Lista',yourQuestion:'Tu Pregunta',placeholder:'Ej: ¿Debería aprender guitarra o piano?',optionA:'Opción A',optionB:'Opción B',firstOption:'Primera opción',secondOption:'Segunda opción',decide:'Decidir',yesNoSimple:'Sí · No — simple y claro.',addOption:'+ Añadir Opción',option:'Opción',thinking:'Pensando',aiEngine:'Motor IA',yourDecision:'Tu Decisión',askAgain:'Preguntar de nuevo',share:'Compartir',copied:'¡Copiado al portapapeles!',historyTitle:'Historial',yourPastDecisions:'Tus decisiones pasadas',noDecisions:'Aún no hay decisiones. ¡Crea la primera!',footer:'Decision Help — decisiones con IA',voiceNotSupported:'Entrada de voz no compatible',pleaseEnterQuestion:'Por favor ingresa tu pregunta',pleaseEnterBoth:'Por favor ingresa ambas opciones',pleaseEnterAtLeast:'Por favor ingresa al menos 2 opciones',blockedQuestion:'No aceptamos: violencia, autolesiones, contenido +18, drogas, discurso de odio, actividades ilegales, groserías o cualquier cosa dañina.',blockedOption:'No aceptamos: violencia, contenido +18, drogas, discurso de odio. Usa solo opciones positivas.',somethingWentWrong:'Algo salió mal:',speakQuestion:'Di tu pregunta',navLogin:'Iniciar Sesión',navRegister:'Registrarse',navProfile:'Perfil',navLogout:'Cerrar Sesión',loginTitle:'Bienvenido de nuevo',loginSubtitle:'Inicia sesión en tu cuenta',registerTitle:'Crear Cuenta',registerSubtitle:'Únete a Decision Help hoy',username:'Usuario',email:'Correo electrónico',password:'Contraseña',confirmPassword:'Confirmar Contraseña',loginBtn:'Iniciar Sesión',registerBtn:'Crear Cuenta',logoutBtn:'Cerrar Sesión',alreadyHaveAccount:'¿Ya tienes una cuenta?',noAccountYet:'¿No tienes una cuenta?',registerSuccess:'¡Cuenta creada! Has iniciado sesión.',loginSuccess:'¡Sesión iniciada!',fillAllFields:'Por favor completa todos los campos',passwordsDontMatch:'Las contraseñas no coinciden',emailInvalid:'Ingresa un correo válido',userExists:'Ya existe una cuenta con este correo',userNotFound:'No se encontró cuenta con este correo',wrongPassword:'Contraseña incorrecta',profileGreeting:'Hola',memberSince:'Miembro desde'},
+            fr:{navHome:'Accueil',navHistory:'Historique',title:'Quelle est votre question ?',subtitle:'Obtenez de la clarté sur tout choix',modeThisOrThat:'Ceci ou Cela',modeYesNo:'Oui ou Non',modePickList:'Choisir dans la Liste',yourQuestion:'Votre Question',placeholder:'Ex: Devrais-je apprendre la guitare ou le piano ?',optionA:'Option A',optionB:'Option B',firstOption:'Première option',secondOption:'Deuxième option',decide:'Décider',yesNoSimple:'Oui · Non — simple et clair.',addOption:'+ Ajouter une Option',option:'Option',thinking:'Réflexion',aiEngine:'Moteur IA',yourDecision:'Votre Décision',askAgain:'Redemander',share:'Partager',copied:'Copié dans le presse-papiers !',historyTitle:'Historique',yourPastDecisions:'Vos décisions passées',noDecisions:'Aucune décision encore. Créez la première !',footer:'Decision Help — décisions par IA',voiceNotSupported:'Saisie vocale non prise en charge',pleaseEnterQuestion:'Veuillez entrer votre question',pleaseEnterBoth:'Veuillez entrer les deux options',pleaseEnterAtLeast:'Veuillez entrer au moins 2 options',blockedQuestion:'Nous n\'acceptons pas : violence, automutilation, contenu +18, drogues, discours haineux, activités illégales, grossièretés ou tout contenu nuisible.',blockedOption:'Nous n\'acceptons pas : violence, contenu +18, drogues, discours haineux. Utilisez uniquement des options positives.',somethingWentWrong:'Quelque chose s\'est mal passé :',speakQuestion:'Prononcez votre question',navLogin:'Connexion',navRegister:'Inscription',navProfile:'Profil',navLogout:'Déconnexion',loginTitle:'Bon Retour',loginSubtitle:'Connectez-vous à votre compte',registerTitle:'Créer un Compte',registerSubtitle:'Rejoignez Decision Help aujourd\'hui',username:'Nom d\'utilisateur',email:'E-mail',password:'Mot de passe',confirmPassword:'Confirmer le Mot de Passe',loginBtn:'Se Connecter',registerBtn:'Créer un Compte',logoutBtn:'Se Déconnecter',alreadyHaveAccount:'Vous avez déjà un compte ?',noAccountYet:'Pas encore de compte ?',registerSuccess:'Compte créé ! Vous êtes connecté.',loginSuccess:'Connecté avec succès !',fillAllFields:'Veuillez remplir tous les champs',passwordsDontMatch:'Les mots de passe ne correspondent pas',emailInvalid:'Veuillez entrer un e-mail valide',userExists:'Un compte avec cet e-mail existe déjà',userNotFound:'Aucun compte trouvé avec cet e-mail',wrongPassword:'Mot de passe incorrect',profileGreeting:'Bonjour',memberSince:'Membre depuis'},
+            de:{navHome:'Start',navHistory:'Verlauf',title:'Was ist deine Frage?',subtitle:'Gewinne Klarheit bei jeder Entscheidung',modeThisOrThat:'Dies oder Das',modeYesNo:'Ja oder Nein',modePickList:'Aus Liste wählen',yourQuestion:'Deine Frage',placeholder:'z.B. Soll ich Gitarre oder Klavier lernen?',optionA:'Option A',optionB:'Option B',firstOption:'Erste Option',secondOption:'Zweite Option',decide:'Entscheiden',yesNoSimple:'Ja · Nein — einfach und klar.',addOption:'+ Option hinzufügen',option:'Option',thinking:'Nachdenken',aiEngine:'KI-Motor',yourDecision:'Deine Entscheidung',askAgain:'Erneut fragen',share:'Teilen',copied:'In die Zwischenablage kopiert!',historyTitle:'Verlauf',yourPastDecisions:'Deine vergangenen Entscheidungen',noDecisions:'Noch keine Entscheidungen. Erstelle deine erste!',footer:'Decision Help — KI-gestützte Entscheidungen',voiceNotSupported:'Spracheingabe nicht unterstützt',pleaseEnterQuestion:'Bitte gib deine Frage ein',pleaseEnterBoth:'Bitte gib beide Optionen ein',pleaseEnterAtLeast:'Bitte gib mindestens 2 Optionen ein',blockedQuestion:'Wir akzeptieren keine: Gewalt, Selbstverletzung, +18-Inhalte, Drogen, Hassrede, illegale Aktivitäten, Obszönitäten oder schädliche Inhalte.',blockedOption:'Wir akzeptieren keine: Gewalt, +18-Inhalte, Drogen, Hassrede. Bitte verwende positive Optionen.',somethingWentWrong:'Etwas ist schiefgelaufen:',speakQuestion:'Sprich deine Frage',navLogin:'Anmelden',navRegister:'Registrieren',navProfile:'Profil',navLogout:'Abmelden',loginTitle:'Willkommen zurück',loginSubtitle:'Melde dich bei deinem Konto an',registerTitle:'Konto erstellen',registerSubtitle:'Heute Decision Help beitreten',username:'Benutzername',email:'E-Mail',password:'Passwort',confirmPassword:'Passwort bestätigen',loginBtn:'Anmelden',registerBtn:'Konto erstellen',logoutBtn:'Abmelden',alreadyHaveAccount:'Hast du bereits ein Konto?',noAccountYet:'Noch kein Konto?',registerSuccess:'Konto erstellt! Du bist angemeldet.',loginSuccess:'Erfolgreich angemeldet!',fillAllFields:'Bitte fülle alle Felder aus',passwordsDontMatch:'Passwörter stimmen nicht überein',emailInvalid:'Bitte gib eine gültige E-Mail ein',userExists:'Ein Konto mit dieser E-Mail existiert bereits',userNotFound:'Kein Konto mit dieser E-Mail gefunden',wrongPassword:'Falsches Passwort',profileGreeting:'Hallo',memberSince:'Mitglied seit'},
+            it:{navHome:'Home',navHistory:'Cronologia',title:'Qual è la tua domanda?',subtitle:'Ottieni chiarezza su ogni scelta',modeThisOrThat:'Questo o Quello',modeYesNo:'Sì o No',modePickList:'Scegli dalla Lista',yourQuestion:'La Tua Domanda',placeholder:'Es: Dovrei imparare la chitarra o il piano?',optionA:'Opzione A',optionB:'Opzione B',firstOption:'Prima opzione',secondOption:'Seconda opzione',decide:'Decidi',yesNoSimple:'Sì · No — semplice e chiaro.',addOption:'+ Aggiungi Opzione',option:'Opzione',thinking:'Pensando',aiEngine:'Motore IA',yourDecision:'La Tua Decisione',askAgain:'Chiedi di nuovo',share:'Condividi',copied:'Copiato negli appunti!',historyTitle:'Cronologia',yourPastDecisions:'Le tue decisioni passate',noDecisions:'Nessuna decisione ancora. Crea la prima!',footer:'Decision Help — decisioni con IA',voiceNotSupported:'Input vocale non supportato',pleaseEnterQuestion:'Per favore inserisci la tua domanda',pleaseEnterBoth:'Per favore inserisci entrambe le opzioni',pleaseEnterAtLeast:'Per favore inserisci almeno 2 opzioni',blockedQuestion:'Non accettiamo: violenza, autolesionismo, contenuti +18, droghe, discorsi d\'odio, attività illegali, volgarità o qualsiasi cosa dannosa.',blockedOption:'Non accettiamo: violenza, contenuti +18, droghe, discorsi d\'odio. Usa solo opzioni positive.',somethingWentWrong:'Qualcosa è andato storto:',speakQuestion:'Parla la tua domanda',navLogin:'Accedi',navRegister:'Registrati',navProfile:'Profilo',navLogout:'Esci',loginTitle:'Bentornato',loginSubtitle:'Accedi al tuo account',registerTitle:'Crea Account',registerSubtitle:'Unisciti a Decision Help oggi',username:'Nome utente',email:'Email',password:'Password',confirmPassword:'Conferma Password',loginBtn:'Accedi',registerBtn:'Crea Account',logoutBtn:'Esci',alreadyHaveAccount:'Hai già un account?',noAccountYet:'Non hai un account?',registerSuccess:'Account creato! Ora sei connesso.',loginSuccess:'Accesso effettuato!',fillAllFields:'Compila tutti i campi',passwordsDontMatch:'Le password non corrispondono',emailInvalid:'Inserisci un\'email valida',userExists:'Esiste già un account con questa email',userNotFound:'Nessun account trovato con questa email',wrongPassword:'Password errata',profileGreeting:'Ciao',memberSince:'Membro dal'},
+            pt:{navHome:'Início',navHistory:'Histórico',title:'Qual é a sua pergunta?',subtitle:'Obtenha clareza em qualquer escolha',modeThisOrThat:'Isto ou Aquilo',modeYesNo:'Sim ou Não',modePickList:'Escolher da Lista',yourQuestion:'Sua Pergunta',placeholder:'Ex: Devo aprender guitarra ou piano?',optionA:'Opção A',optionB:'Opção B',firstOption:'Primeira opção',secondOption:'Segunda opção',decide:'Decidir',yesNoSimple:'Sim · Não — simples e claro.',addOption:'+ Adicionar Opção',option:'Opção',thinking:'Pensando',aiEngine:'Motor IA',yourDecision:'Sua Decisão',askAgain:'Perguntar de novo',share:'Compartilhar',copied:'Copiado para a área de transferência!',historyTitle:'Histórico',yourPastDecisions:'Suas decisões passadas',noDecisions:'Nenhuma decisão ainda. Crie a primeira!',footer:'Decision Help — decisões com IA',voiceNotSupported:'Entrada de voz não suportada',pleaseEnterQuestion:'Por favor insira sua pergunta',pleaseEnterBoth:'Por favor insira ambas as opções',pleaseEnterAtLeast:'Por favor insira pelo menos 2 opções',blockedQuestion:'Não aceitamos: violência, automutilação, conteúdo +18, drogas, discurso de ódio, atividades ilegais, obscenidades ou qualquer coisa prejudicial.',blockedOption:'Não aceitamos: violência, conteúdo +18, drogas, discurso de ódio. Use apenas opções positivas.',somethingWentWrong:'Algo deu errado:',speakQuestion:'Fale sua pergunta',navLogin:'Entrar',navRegister:'Cadastrar',navProfile:'Perfil',navLogout:'Sair',loginTitle:'Bem-vindo de volta',loginSubtitle:'Entre na sua conta',registerTitle:'Criar Conta',registerSubtitle:'Junte-se à Decision Help hoje',username:'Nome de usuário',email:'E-mail',password:'Senha',confirmPassword:'Confirmar Senha',loginBtn:'Entrar',registerBtn:'Criar Conta',logoutBtn:'Sair',alreadyHaveAccount:'Já tem uma conta?',noAccountYet:'Não tem uma conta?',registerSuccess:'Conta criada! Você está conectado.',loginSuccess:'Conectado com sucesso!',fillAllFields:'Preencha todos os campos',passwordsDontMatch:'As senhas não coincidem',emailInvalid:'Insira um e-mail válido',userExists:'Já existe uma conta com este e-mail',userNotFound:'Nenhuma conta encontrada com este e-mail',wrongPassword:'Senha incorreta',profileGreeting:'Olá',memberSince:'Membro desde'},
+            ar:{navHome:'الرئيسية',navHistory:'السجل',title:'ما هو سؤالك؟',subtitle:'احصل على وضوح في أي خيار',modeThisOrThat:'هذا أو ذاك',modeYesNo:'نعم أو لا',modePickList:'اختر من القائمة',yourQuestion:'سؤالك',placeholder:'مثال: هل يجب أن أتعلم الجيتار أم البيانو؟',optionA:'الخيار أ',optionB:'الخيار ب',firstOption:'الخيار الأول',secondOption:'الخيار الثاني',decide:'قرر',yesNoSimple:'نعم · لا — بسيط وواضح.',addOption:'+ إضافة خيار',option:'خيار',thinking:'تفكير',aiEngine:'محرك الذكاء الاصطناعي',yourDecision:'قرارك',askAgain:'اسأل مجدداً',share:'مشاركة',copied:'تم النسخ إلى الحافظة!',historyTitle:'السجل',yourPastDecisions:'قراراتك السابقة',noDecisions:'لا توجد قرارات بعد. اتخذ قرارك الأول!',footer:'Decision Help — قرارات بالذكاء الاصطناعي',voiceNotSupported:'إدخال الصوت غير مدعوم',pleaseEnterQuestion:'الرجاء إدخال سؤالك',pleaseEnterBoth:'الرجاء إدخال كلا الخيارين',pleaseEnterAtLeast:'الرجاء إدخال خيارين على الأقل',blockedQuestion:'نحن لا نقبل: العنف، إيذاء النفس، محتوى +18، المخدرات، خطاب الكراهية، الأنشطة غير القانونية، أو أي شيء ضار.',blockedOption:'نحن لا نقبل: العنف، محتوى +18، المخدرات، خطاب الكراهية. الرجاء استخدام خيارات إيجابية فقط.',somethingWentWrong:'حدث خطأ ما:',speakQuestion:'تحدث بسؤالك',navLogin:'تسجيل الدخول',navRegister:'إنشاء حساب',navProfile:'الملف الشخصي',navLogout:'تسجيل الخروج',loginTitle:'مرحباً بعودتك',loginSubtitle:'تسجيل الدخول إلى حسابك',registerTitle:'إنشاء حساب',registerSubtitle:'انضم إلى Decision Help اليوم',username:'اسم المستخدم',email:'البريد الإلكتروني',password:'كلمة المرور',confirmPassword:'تأكيد كلمة المرور',loginBtn:'تسجيل الدخول',registerBtn:'إنشاء حساب',logoutBtn:'تسجيل الخروج',alreadyHaveAccount:'هل لديك حساب بالفعل؟',noAccountYet:'ليس لديك حساب؟',registerSuccess:'تم إنشاء الحساب! تم تسجيل الدخول.',loginSuccess:'تم تسجيل الدخول بنجاح!',fillAllFields:'يرجى ملء جميع الحقول',passwordsDontMatch:'كلمات المرور غير متطابقة',emailInvalid:'يرجى إدخال بريد إلكتروني صحيح',userExists:'يوجد حساب بالفعل بهذا البريد الإلكتروني',userNotFound:'لم يتم العثور على حساب بهذا البريد الإلكتروني',wrongPassword:'كلمة المرور غير صحيحة',profileGreeting:'مرحباً',memberSince:'عضو منذ'},
+            ja:{navHome:'ホーム',navHistory:'履歴',title:'質問は何ですか？',subtitle:'どんな選択にも明確さを',modeThisOrThat:'これかそれか',modeYesNo:'はい・いいえ',modePickList:'リストから選ぶ',yourQuestion:'あなたの質問',placeholder:'例：ギターとピアノ、どちらを学ぶべき？',optionA:'選択肢A',optionB:'選択肢B',firstOption:'最初の選択肢',secondOption:'二番目の選択肢',decide:'決定',yesNoSimple:'はい・いいえ — シンプルで明確。',addOption:'+ 選択肢を追加',option:'選択肢',thinking:'考え中',aiEngine:'AIエンジン',yourDecision:'あなたの決定',askAgain:'もう一度聞く',share:'シェア',copied:'クリップボードにコピーしました！',historyTitle:'履歴',yourPastDecisions:'過去の決定',noDecisions:'まだ決定がありません。最初の決定をしましょう！',footer:'Decision Help — AIによる意思決定支援',voiceNotSupported:'音声入力はサポートされていません',pleaseEnterQuestion:'質問を入力してください',pleaseEnterBoth:'両方の選択肢を入力してください',pleaseEnterAtLeast:'少なくとも2つの選択肢を入力してください',blockedQuestion:'我们不接受：暴力、自傷行為、+18コンテンツ、薬物、ヘイトスピーチ、違法行為、わいせつ表現、または有害な内容。',blockedOption:'我们不接受：暴力、+18コンテンツ、薬物、ヘイトスピーチ。ポジティブな選択肢のみ使用してください。',somethingWentWrong:'エラーが発生しました：',speakQuestion:'質問を話してください',navLogin:'ログイン',navRegister:'登録',navProfile:'プロフィール',navLogout:'ログアウト',loginTitle:'おかえりなさい',loginSubtitle:'アカウントにサインイン',registerTitle:'アカウント作成',registerSubtitle:'今すぐDecision Helpに参加',username:'ユーザー名',email:'メールアドレス',password:'パスワード',confirmPassword:'パスワード確認',loginBtn:'サインイン',registerBtn:'アカウント作成',logoutBtn:'ログアウト',alreadyHaveAccount:'すでにアカウントをお持ちですか？',noAccountYet:'アカウントをお持ちでないですか？',registerSuccess:'アカウントを作成しました！ログイン中です。',loginSuccess:'ログインしました！',fillAllFields:'すべての項目を入力してください',passwordsDontMatch:'パスワードが一致しません',emailInvalid:'有効なメールアドレスを入力してください',userExists:'このメールアドレスのアカウントは既に存在します',userNotFound:'このメールアドレスのアカウントが見つかりません',wrongPassword:'パスワードが間違っています',profileGreeting:'こんにちは',memberSince:'登録日'},
+            ko:{navHome:'홈',navHistory:'기록',title:'질문은 무엇인가요?',subtitle:'모든 선택에 명확함을',modeThisOrThat:'이것 아니면 저것',modeYesNo:'예 또는 아니오',modePickList:'목록에서 선택',yourQuestion:'질문',placeholder:'예: 기타와 피아노 중 무엇을 배워야 할까요?',optionA:'선택 A',optionB:'선택 B',firstOption:'첫 번째 선택',secondOption:'두 번째 선택',decide:'결정',yesNoSimple:'예 · 아니오 — 간단하고 명확합니다.',addOption:'+ 선택 추가',option:'선택',thinking:'생각 중',aiEngine:'AI 엔진',yourDecision:'당신의 결정',askAgain:'다시 물어보기',share:'공유',copied:'클립보드에 복사되었습니다!',historyTitle:'기록',yourPastDecisions:'과거 결정들',noDecisions:'아직 결정이 없습니다. 첫 번째 결정을 내리세요!',footer:'Decision Help — AI 기반 결정',voiceNotSupported:'음성 입력이 지원되지 않습니다',pleaseEnterQuestion:'질문을 입력하세요',pleaseEnterBoth:'두 선택지를 모두 입력하세요',pleaseEnterAtLeast:'최소 2개의 선택지를 입력하세요',blockedQuestion:'폭력, 자해, +18 콘텐츠, 마약, 증오 발언, 불법 활동, 외설 또는 유해한 콘텐츠는 허용되지 않습니다.',blockedOption:'폭력, +18 콘텐츠, 마약, 증오 발언은 허용되지 않습니다. 긍정적인 선택지만 사용하세요.',somethingWentWrong:'오류가 발생했습니다:',speakQuestion:'질문을 말하세요',navLogin:'로그인',navRegister:'회원가입',navProfile:'프로필',navLogout:'로그아웃',loginTitle:'돌아오신 것을 환영합니다',loginSubtitle:'계정에 로그인하세요',registerTitle:'계정 만들기',registerSubtitle:'지금 Decision Help에 가입하세요',username:'사용자 이름',email:'이메일',password:'비밀번호',confirmPassword:'비밀번호 확인',loginBtn:'로그인',registerBtn:'가입하기',logoutBtn:'로그아웃',alreadyHaveAccount:'이미 계정이 있으신가요?',noAccountYet:'계정이 없으신가요?',registerSuccess:'계정이 생성되었습니다! 로그인되었습니다.',loginSuccess:'로그인 성공!',fillAllFields:'모든 항목을 입력해주세요',passwordsDontMatch:'비밀번호가 일치하지 않습니다',emailInvalid:'유효한 이메일을 입력해주세요',userExists:'이 이메일로 된 계정이 이미 있습니다',userNotFound:'이 이메일의 계정을 찾을 수 없습니다',wrongPassword:'비밀번호가 올바르지 않습니다',profileGreeting:'안녕하세요',memberSince:'가입일'},
+            zh:{navHome:'首页',navHistory:'历史',title:'你的问题是什么？',subtitle:'在任何选择中获得清晰度',modeThisOrThat:'这个还是那个',modeYesNo:'是或否',modePickList:'从列表中选择',yourQuestion:'你的问题',placeholder:'例如：我应该学吉他还是钢琴？',optionA:'选项A',optionB:'选项B',firstOption:'第一个选项',secondOption:'第二个选项',decide:'决定',yesNoSimple:'是 · 否 — 简单明了。',addOption:'+ 添加选项',option:'选项',thinking:'思考中',aiEngine:'AI引擎',yourDecision:'你的决定',askAgain:'再问一次',share:'分享',copied:'已复制到剪贴板！',historyTitle:'历史记录',yourPastDecisions:'你过去的决定',noDecisions:'还没有决定。做出第一个决定吧！',footer:'Decision Help — AI驱动的决策',voiceNotSupported:'您的浏览器不支持语音输入',pleaseEnterQuestion:'请输入您的问题',pleaseEnterBoth:'请同时输入两个选项',pleaseEnterAtLeast:'请至少输入2个选项',blockedQuestion:'我们不接受：暴力、自残、+18内容、毒品、仇恨言论、非法活动、猥亵或任何有害内容。',blockedOption:'我们不接受：暴力、+18内容、毒品、仇恨言论。请仅使用积极的选项。',somethingWentWrong:'出了点问题：',speakQuestion:'说出您的问题',navLogin:'登录',navRegister:'注册',navProfile:'个人资料',navLogout:'退出',loginTitle:'欢迎回来',loginSubtitle:'登录您的账户',registerTitle:'创建账户',registerSubtitle:'立即加入Decision Help',username:'用户名',email:'邮箱',password:'密码',confirmPassword:'确认密码',loginBtn:'登录',registerBtn:'创建账户',logoutBtn:'退出',alreadyHaveAccount:'已有账户？',noAccountYet:'还没有账户？',registerSuccess:'账户创建成功！已登录。',loginSuccess:'登录成功！',fillAllFields:'请填写所有字段',passwordsDontMatch:'两次密码不一致',emailInvalid:'请输入有效的邮箱地址',userExists:'该邮箱已注册',userNotFound:'未找到该邮箱的账户',wrongPassword:'密码错误',profileGreeting:'你好',memberSince:'注册于'}
+        };
+        var currentLang = LS.getItem('wisdom_lang') || 'en';
+        function t(k){return(lang[currentLang]||lang.en)[k]||lang.en[k]||k}
+        function setLang(l){currentLang=l;LS.setItem('wisdom_lang',l);if(l==='ar'){document.body.style.direction='rtl';document.body.style.textAlign='right'}else{document.body.style.direction='ltr';document.body.style.textAlign='left'}render()}
+
+        // ─── STATE ───
+        var view = 'home', mode = 'thisOrThat', dark = LS.getItem('wisdom_dark') === 'true';
+        var historyList = [];
+        try{var h=LS.getItem('wisdom_history');if(h)historyList=JSON.parse(h)}catch(e){}
+        // ─── THEME ───
+        if(dark)document.body.classList.add('dark');
+        function toggleDark(){dark=!dark;document.body.classList.toggle('dark',dark);LS.setItem('wisdom_dark',dark);document.getElementById('darkBtn').textContent=dark?'☀️':'🌙'}
+
+        // ─── AUTH ───
+        var currentUser = null;
+        var users = [];
+        try{var u=LS.getItem('wisdom_users');if(u)users=JSON.parse(u)}catch(e){}
+        try{var s=LS.getItem('wisdom_session');if(s){for(var i=0;i<users.length;i++){if(users[i].id===s){currentUser=users[i];break}}}}catch(e){}
+
+        function hashPassword(p){var h=0;for(var i=0;i<p.length;i++){var c=p.charCodeAt(i);h=((h<<5)-h)+c;h=h&h}return h.toString(36) + btoa(p).slice(0,8)}
+        function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+        function saveUsers(){LS.setItem('wisdom_users',JSON.stringify(users));if(currentUser){for(var i=0;i<users.length;i++){if(users[i].id===currentUser.id){currentUser=users[i];break}}}}
+
+        function registerUser(username, email, password) {
+            if (!username||!email||!password) return {ok:false,msg:t('fillAllFields')};
+            if (!validateEmail(email)) return {ok:false,msg:t('emailInvalid')};
+            for (var i=0;i<users.length;i++){if(users[i].email===email)return{ok:false,msg:t('userExists')}}
+            var user = {id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),username:username,email:email,password:hashPassword(password),createdAt:new Date().toISOString()};
+            users.push(user);currentUser=user;LS.setItem('wisdom_session',user.id);saveUsers();
+            return {ok:true,msg:t('registerSuccess')};
+        }
+
+        function loginUser(email, password) {
+            if (!email||!password) return {ok:false,msg:t('fillAllFields')};
+            var h=hashPassword(password);
+            for (var i=0;i<users.length;i++){if(users[i].email===email){if(users[i].password===h){currentUser=users[i];LS.setItem('wisdom_session',users[i].id);saveUsers();return{ok:true,msg:t('loginSuccess')}}else{return{ok:false,msg:t('wrongPassword')}}}}
+            return {ok:false,msg:t('userNotFound')};
+        }
+
+        function logoutUser() {currentUser=null;LS.removeItem('wisdom_session');render()}
+
+        // ─── BLACKLIST ───
+        var BLOCKED = ['kill','murder','death','suicide','self-harm','cut myself','end my life','drug','cocaine','heroin','weed','marijuana','meth','lsd','ecstasy','opium','sex','porn','naked','nude','sexual','pornography','prostitute','escort','xxx','adult content','penis','vagina','orgasm','erotic','strip club','gun','weapon','bomb','explosion','knife','attack','torture','abuse','blood','injury','hurt','pain','die','hate','racist','nazi','terrorist','stupid','idiot','moron','steal','rob','burglary','hack','fraud','scam','cheat','illegal','gambling','casino','bet','alcohol','drunk','cigarette','fuck','shit','bitch','ass','damn','puke','vomit','poop','satanic','curse','demon','hell','violent','bully','harass','threat','toxic'];
+        function isClean(t){var l=t.toLowerCase();for(var i=0;i<BLOCKED.length;i++){if(BLOCKED[i].indexOf(' ')>-1){if(l.indexOf(BLOCKED[i])>-1)return false}else{var r=new RegExp('\\b'+BLOCKED[i].replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');if(r.test(l))return false}}return true}
+
+        // ─── POSITIVE WORDS ───
+        var POS = ['learn','study','practice','improve','grow','help','friend','family','love','care','creative','art','music','sports','exercise','health','meditate','yoga','read','write','cook','travel','explore','nature','volunteer','teach','inspire','career','skill','hobby','fitness','code','build','design','start','business','dream','goal','adventure'];
+
+        // ─── SMART DECISION ───
+        function smartDecide(options, question) {
+            var qLower = question.toLowerCase();
+            var qScore = 0;
+            for (var i = 0; i < POS.length; i++) {
+                var r = new RegExp('\\b' + POS[i] + '\\b', 'i');
+                if (r.test(qLower)) qScore += 10;
+            }
+            var bias = Math.min(qScore / 100, 0.4);
+
+            var scores = options.map(function(opt) {
+                var w = 1 + Math.random() * 2;
+                var l = opt.toLowerCase();
+                for (var i = 0; i < POS.length; i++) {
+                    var r = new RegExp('\\b' + POS[i] + '\\b', 'i');
+                    if (r.test(l)) w += 0.5;
+                }
+                if (opt.length > 25) w += 0.2;
+                return w * (1 + bias);
+            });
+
+            var total = 0; for (var i = 0; i < scores.length; i++) total += scores[i];
+            var rand = Math.random() * total, sum = 0;
+            for (var i = 0; i < scores.length; i++) { sum += scores[i]; if (rand <= sum) return options[i]; }
+            return options[0];
+        }
+
+        function smartReason(choice, mode, question) {
+            if (mode === 'yesNo') {
+                if (choice === 'Yes') {
+                    var yesR = ['Absolutely yes! This opens wonderful opportunities.','Yes! Your heart is guiding you right.','The answer is YES — embrace this path.','Definitely YES! Great things await.','Yes! Trust your instincts.'];
+                    return yesR[Math.floor(Math.random() * yesR.length)];
+                } else {
+                    var noR = ['Not now — and that is okay. Trust the timing.','No — sometimes the best choice is to wait.','The answer is no for now. Something better may come.','Not this time. Redirect your energy elsewhere.','No — and that is a positive choice too.'];
+                    return noR[Math.floor(Math.random() * noR.length)];
+                }
+            }
+            var emojis = ['✨','🎯','💡','🌟','🌈','🎨','🌻','⭐','🔥','💎'];
+            var e = emojis[Math.floor(Math.random()*emojis.length)];
+            var t = [
+                e+' '+choice+' aligns perfectly with your goals.',
+                e+' The clearest path forward is '+choice+'.',
+                e+' '+choice+' brings the most joy and growth.',
+                e+' Go with '+choice+' — your intuition knows best.',
+                e+' '+choice+' opens wonderful new doors.',
+                e+' All signs point to '+choice+'. Great choice!',
+                e+' Trust this — '+choice+' is meant for you.',
+                e+' '+choice+' leads to the most fulfilling outcome.'
+            ];
+            return t[Math.floor(Math.random()*t.length)];
+        }
+
+        // ─── DECIDE ───
+        function decide() {
+            try {
+                var q = document.getElementById('q');
+                if (!q || !q.value) { alert(t('pleaseEnterQuestion')); return; }
+                if (!isClean(q.value)) { showError(t('blockedQuestion')); return; }
+
+                var opts = [];
+                if (mode === 'yesNo') { opts = ['Yes', 'No']; }
+                else if (mode === 'thisOrThat') {
+                    var a = document.getElementById('optA'), b = document.getElementById('optB');
+                    if (!a||!a.value||!b||!b.value) { alert(t('pleaseEnterBoth')); return; }
+                    if (!isClean(a.value)||!isClean(b.value)) { showError(t('blockedOption')); return; }
+                    opts = [a.value, b.value];
+                } else if (mode === 'list') {
+                    var inputs = document.querySelectorAll('.list-opt');
+                    opts = []; for(var i=0;i<inputs.length;i++){var v=inputs[i].value.trim();if(v)opts.push(v)}
+                    if (opts.length < 2) { alert(t('pleaseEnterAtLeast')); return; }
+                    for(var i=0;i<opts.length;i++){if(!isClean(opts[i])){showError(t('blockedOption'));return}}
+                }
+
+                showThinking();
+
+                var result = smartDecide(opts, q.value);
+                var reason = smartReason(result, mode, q.value);
+
+                var entry = { id: Date.now(), question: q.value, options: opts, result: result, reason: reason, date: new Date().toISOString() };
+                historyList.unshift(entry);
+                if (historyList.length > 100) historyList.pop();
+                LS.setItem('wisdom_history', JSON.stringify(historyList));
+
+                showResult(result, reason);
+            } catch(e) {
+                showError(t('somethingWentWrong') + ' ' + e.message);
+            }
+        }
+
+        function showThinking() {
+            var c = document.getElementById('result');
+            if (c) c.innerHTML = '<div class="thinking"><div class="spinner"></div><div class="thinking-text">' + t('thinking') + '<span class="dots"></span></div></div>';
+        }
+
+        function showResult(result, reason) {
+            var c = document.getElementById('result');
+            if (!c) return;
+            c.innerHTML =
+                '<div class="result-card">' +
+                    '<div class="badge badge-smart">' + t('aiEngine') + '</div>' +
+                    '<div class="result-badge">' + t('yourDecision') + '</div>' +
+                    '<div class="result-choice">' + escapeHtml(result) + '</div>' +
+                    '<div class="result-reason">' + escapeHtml(reason) + '</div>' +
+                    '<div class="result-actions">' +
+                        '<button onclick="resetForm()">' + t('askAgain') + '</button>' +
+                        '<button onclick="shareResult()">' + t('share') + '</button>' +
+                    '</div>' +
+                '</div>';
+            c.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showError(msg) {
+            var c = document.getElementById('result');
+            if (c) c.innerHTML = '<div class="error-box">' + escapeHtml(msg) + '</div>';
+            else alert(msg);
+        }
+
+        function resetForm() { location.reload(); }
+
+        function shareResult() {
+            var c = document.querySelector('.result-card');
+            if (!c) return;
+            var text = 'Decision Help says: ' + (c.querySelector('.result-choice')||{}).textContent + '! ' + (c.querySelector('.result-reason')||{}).textContent;
+            if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).catch(function(){}); }
+            else {
+                var ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.left='-9999px';
+                document.body.appendChild(ta); ta.select(); try{document.execCommand('copy')}catch(e){} document.body.removeChild(ta);
+            }
+            alert(t('copied'));
+        }
+
+        function escapeHtml(s) { if(!s)return ''; return s.replace(/[&<>]/g,function(m){return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'}) }
+
+        // ─── VIEWS ───
+        function showView(v) { view = v; render(); }
+
+        function updateStaticUI() {
+            var els = document.querySelectorAll('[data-key]');
+            for (var i = 0; i < els.length; i++) {
+                var key = els[i].getAttribute('data-key');
+                if (key) els[i].textContent = t(key);
+            }
+            var footer = document.getElementById('footerText');
+            if (footer) footer.textContent = t('footer');
+            var sel = document.getElementById('langSelect');
+            if (sel) sel.value = currentLang;
+            var authNav = document.getElementById('navAuth');
+            if (authNav) {
+                if (currentUser) {
+                    authNav.innerHTML = '<span class="nav-user">' + escapeHtml(currentUser.username) + '</span>' +
+                        '<a class="btn-auth" onclick="showView(\'profile\')" data-key="navProfile">' + t('navProfile') + '</a>' +
+                        '<a class="btn-auth" onclick="logoutUser()" data-key="navLogout">' + t('navLogout') + '</a>';
+                } else {
+                    authNav.innerHTML = '<a class="btn-auth" onclick="showView(\'login\')" data-key="navLogin">' + t('navLogin') + '</a>' +
+                        '<a class="btn-auth btn-auth-primary" onclick="showView(\'register\')" data-key="navRegister">' + t('navRegister') + '</a>';
+                }
+            }
+        }
+
+        function render() {
+            var app = document.getElementById('app');
+            updateStaticUI();
+            if (view === 'home') renderHome(app);
+            else if (view === 'history') renderHistory(app);
+            else if (view === 'login') renderLogin(app);
+            else if (view === 'register') renderRegister(app);
+            else if (view === 'profile') { if (currentUser) renderProfile(app); else { view='login'; renderLogin(app); } }
+        }
+
+        function renderHome(c) {
+            c.innerHTML =
+                '<div class="container">' +
+                    '<h1 class="page-title">' + t('title') + '</h1>' +
+                    '<p class="page-subtitle">' + t('subtitle') + '</p>' +
+                    '<div class="mode-group">' +
+                        '<button class="mode-btn '+(mode==='thisOrThat'?'active':'')+'" onclick="setMode(\'thisOrThat\')">' + t('modeThisOrThat') + '</button>' +
+                        '<button class="mode-btn '+(mode==='yesNo'?'active':'')+'" onclick="setMode(\'yesNo\')">' + t('modeYesNo') + '</button>' +
+                        '<button class="mode-btn '+(mode==='list'?'active':'')+'" onclick="setMode(\'list\')">' + t('modePickList') + '</button>' +
+                    '</div>' +
+                    '<div class="card">' +
+                        '<div class="field">' +
+                            '<label>' + t('yourQuestion') + '</label>' +
+                            '<div class="input-row">' +
+                                '<input type="text" id="q" placeholder="' + t('placeholder') + '" maxlength="300" onkeydown="if(event.key===\'Enter\')decide()">' +
+                                '<button class="voice-btn" id="voiceBtn" onclick="startVoice()" title="' + t('speakQuestion') + '">🎤</button>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div id="optsArea"></div>' +
+                        '<button class="btn-primary" onclick="decide()" id="decideBtn">✨ ' + t('decide') + '</button>' +
+                    '</div>' +
+                    '<div id="result"></div>' +
+                    '<div class="ad-container"><span class="ad-label">Sponsored</span><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxx" data-ad-slot="xxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins></div>' +
+                '</div>';
+            renderOpts();
+            try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+        }
+
+        function renderOpts() {
+            var area = document.getElementById('optsArea');
+            if (!area) return;
+            if (mode === 'thisOrThat') {
+                area.innerHTML =
+                    '<div class="field"><label>' + t('optionA') + '</label><input type="text" id="optA" placeholder="' + t('firstOption') + '" onkeydown="if(event.key===\'Enter\')decide()"></div>' +
+                    '<div class="field"><label>' + t('optionB') + '</label><input type="text" id="optB" placeholder="' + t('secondOption') + '" onkeydown="if(event.key===\'Enter\')decide()"></div>';
+            } else if (mode === 'yesNo') {
+                area.innerHTML = '<p style="text-align:center;padding:16px;color:var(--text-secondary)">' + t('yesNoSimple') + '</p>';
+            } else if (mode === 'list') {
+                var h = '<div id="listOpts">';
+                for (var i = 0; i < 2; i++) {
+                    h += '<div class="opt-row"><input type="text" class="list-opt" placeholder="' + t('option') + ' ' + (i + 1) + '" onkeydown="if(event.key===\'Enter\')decide()">' +
+                        (i > 0 ? '<button class="opt-remove" onclick="this.parentElement.remove()">×</button>' : '') + '</div>';
+                }
+                h += '</div><button class="add-opt" onclick="addOpt()">' + t('addOption') + '</button>';
+                area.innerHTML = h;
+            }
+        }
+
+        function setMode(m) { mode = m; render(); }
+
+        function addOpt() {
+            var c = document.getElementById('listOpts');
+            if (c && c.children.length < 10) {
+                var d = document.createElement('div'); d.className = 'opt-row';
+                d.innerHTML = '<input type="text" class="list-opt" placeholder="' + t('option') + ' ' + (c.children.length + 1) + '" onkeydown="if(event.key===\'Enter\')decide()"><button class="opt-remove" onclick="this.parentElement.remove()">×</button>';
+                c.appendChild(d);
+            }
+        }
+
+        // ─── VOICE ───
+        var recognition = null;
+        function startVoice() {
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) { alert(t('voiceNotSupported')); return; }
+            var btn = document.getElementById('voiceBtn');
+            if (recognition) { recognition.stop(); recognition = null; btn.classList.remove('listening'); return; }
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.onresult = function(e) {
+                var text = e.results[0][0].transcript;
+                var q = document.getElementById('q');
+                if (q) q.value = text;
+                btn.classList.remove('listening');
+                recognition = null;
+            };
+            recognition.onerror = function() { btn.classList.remove('listening'); recognition = null; };
+            recognition.onend = function() { btn.classList.remove('listening'); };
+            btn.classList.add('listening');
+            recognition.start();
+        }
+
+        // ─── HISTORY ───
+        function renderHistory(c) {
+            if (historyList.length === 0) {
+                c.innerHTML =
+                    '<div class="container">' +
+                        '<h1 class="page-title">' + t('historyTitle') + '</h1>' +
+                        '<p class="page-subtitle">' + t('yourPastDecisions') + '</p>' +
+                        '<div class="card">' +
+                            '<div class="empty-state"><div class="empty-icon">📭</div><p>' + t('noDecisions') + '</p></div>' +
+                        '</div>' +
+                    '</div>';
+                return;
+            }
+            var html = '<div class="container"><h1 class="page-title">' + t('historyTitle') + '</h1><p class="page-subtitle">' + t('yourPastDecisions') + '</p>';
+            for (var i = 0; i < historyList.length; i++) {
+                var d = historyList[i];
+                html += '<div class="history-item">' +
+                    '<div class="history-q">' + escapeHtml(d.question) + '</div>' +
+                    '<div class="history-r">✨ ' + escapeHtml(d.result) + '</div>' +
+                    '<div class="history-why">' + escapeHtml(d.reason) + '</div>' +
+                    '<div class="history-when">' + new Date(d.date).toLocaleDateString() + '</div>' +
+                '</div>';
+            }
+            html += '</div>';
+            c.innerHTML = html;
+        }
+
+        // ─── AUTH VIEWS ───
+        function renderLogin(c) {
+            c.innerHTML =
+                '<div class="container">' +
+                    '<div class="auth-card card">' +
+                        '<h1 class="page-title" style="font-size:2rem">' + t('loginTitle') + '</h1>' +
+                        '<p class="page-subtitle">' + t('loginSubtitle') + '</p>' +
+                        '<div id="authMsg"></div>' +
+                        '<div class="field"><label>' + t('email') + '</label><input type="email" id="loginEmail" placeholder="' + t('email') + '" onkeydown="if(event.key===\'Enter\')handleLogin()"></div>' +
+                        '<div class="field"><label>' + t('password') + '</label><input type="password" id="loginPass" placeholder="' + t('password') + '" onkeydown="if(event.key===\'Enter\')handleLogin()"></div>' +
+                        '<button class="btn-primary" onclick="handleLogin()">' + t('loginBtn') + '</button>' +
+                        '<div class="auth-switch">' + t('noAccountYet') + ' <a onclick="showView(\'register\')">' + t('registerBtn') + '</a></div>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        function renderRegister(c) {
+            c.innerHTML =
+                '<div class="container">' +
+                    '<div class="auth-card card">' +
+                        '<h1 class="page-title" style="font-size:2rem">' + t('registerTitle') + '</h1>' +
+                        '<p class="page-subtitle">' + t('registerSubtitle') + '</p>' +
+                        '<div id="authMsg"></div>' +
+                        '<div class="field"><label>' + t('username') + '</label><input type="text" id="regUser" placeholder="' + t('username') + '" onkeydown="if(event.key===\'Enter\')handleRegister()"></div>' +
+                        '<div class="field"><label>' + t('email') + '</label><input type="email" id="regEmail" placeholder="' + t('email') + '" onkeydown="if(event.key===\'Enter\')handleRegister()"></div>' +
+                        '<div class="field"><label>' + t('password') + '</label><input type="password" id="regPass" placeholder="' + t('password') + '" onkeydown="if(event.key===\'Enter\')handleRegister()"></div>' +
+                        '<div class="field"><label>' + t('confirmPassword') + '</label><input type="password" id="regConfirm" placeholder="' + t('confirmPassword') + '" onkeydown="if(event.key===\'Enter\')handleRegister()"></div>' +
+                        '<button class="btn-primary" onclick="handleRegister()">' + t('registerBtn') + '</button>' +
+                        '<div class="auth-switch">' + t('alreadyHaveAccount') + ' <a onclick="showView(\'login\')">' + t('loginBtn') + '</a></div>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        function renderProfile(c) {
+            c.innerHTML =
+                '<div class="container">' +
+                    '<div class="auth-card card">' +
+                        '<h1 class="page-title" style="font-size:2rem">' + t('navProfile') + '</h1>' +
+                        '<div class="profile-info">' +
+                            '<div class="profile-avatar">' + escapeHtml((currentUser.username||'?')[0].toUpperCase()) + '</div>' +
+                            '<div class="profile-name">' + escapeHtml(currentUser.username) + '</div>' +
+                            '<div class="profile-detail">' + t('email') + ': ' + escapeHtml(currentUser.email) + '</div>' +
+                            '<div class="profile-detail">' + t('memberSince') + ': ' + new Date(currentUser.createdAt).toLocaleDateString() + '</div>' +
+                        '</div>' +
+                        '<button class="btn-primary" onclick="logoutUser()" style="background:var(--danger);background:linear-gradient(135deg,#e17055,#d63031)">' + t('logoutBtn') + '</button>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        function handleLogin() {
+            var email=document.getElementById('loginEmail');var pass=document.getElementById('loginPass');
+            if(!email||!pass)return;var r=loginUser(email.value,pass.value);
+            var m=document.getElementById('authMsg');if(!m)return;
+            m.innerHTML='<div class="'+(r.ok?'auth-success':'auth-error')+'">'+escapeHtml(r.msg)+'</div>';
+            if(r.ok)render();
+        }
+
+        function handleRegister() {
+            var u=document.getElementById('regUser');var e=document.getElementById('regEmail');
+            var p=document.getElementById('regPass');var c=document.getElementById('regConfirm');
+            if(!u||!e||!p||!c)return;
+            if(p.value!==c.value){var m=document.getElementById('authMsg');if(m)m.innerHTML='<div class="auth-error">'+escapeHtml(t('passwordsDontMatch'))+'</div>';return;}
+            var r=registerUser(u.value,e.value,p.value);
+            var m=document.getElementById('authMsg');if(!m)return;
+            m.innerHTML='<div class="'+(r.ok?'auth-success':'auth-error')+'">'+escapeHtml(r.msg)+'</div>';
+            if(r.ok)render();
+        }
+
+        // ─── INIT ───
+        document.addEventListener('DOMContentLoaded', function() {
+            if (dark) document.getElementById('darkBtn').textContent = '☀️';
+            document.getElementById('langSelect').value = currentLang;
+            if (currentLang === 'ar') { document.body.style.direction = 'rtl'; document.body.style.textAlign = 'right'; }
+            render();
+        });
+    </script>
+</body>
+</html>
