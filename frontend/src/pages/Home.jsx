@@ -114,6 +114,14 @@ function Home({ user, language, t, API_URL }) {
     }
   };
 
+  const shareOnTwitter = () => {
+    if (result) {
+      const text = encodeURIComponent(`${t('decision_friend_says')}: ${result.result}! ${result.reason}`);
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'width=600,height=400');
+    }
+  };
+
   return (
     <div className="home">
       {showConfetti && <div className="confetti">🎉✨🌟🎊</div>}
@@ -212,6 +220,9 @@ function Home({ user, language, t, API_URL }) {
               </button>
               <button onClick={copyToClipboard} className="share-btn">
                 📋 {t('share')}
+              </button>
+              <button onClick={shareOnTwitter} className="share-btn" style={{ background:'#1DA1F2', color:'#fff', border:'none', padding:'12px 24px', borderRadius:'50px', cursor:'pointer', fontWeight:600 }}>
+                🐦 Tweet
               </button>
             </div>
           </div>

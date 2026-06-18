@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decision Help Widget</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif}
+    body{background:#f8f9fe;padding:16px;min-height:100vh}
+    .widget{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(108,92,231,0.10);max-width:400px;margin:0 auto}
+    h2{font-size:1.1rem;color:#2d3436;margin-bottom:4px;text-align:center}
+    p.sub{font-size:0.8rem;color:#636e72;margin-bottom:16px;text-align:center}
+    input,select{width:100%;padding:10px 14px;border:1.5px solid rgba(108,92,231,0.12);border-radius:8px;font-size:0.9rem;margin-bottom:10px;outline:none;transition:border-color .3s}
+    input:focus{border-color:#6c5ce7}
+    button{width:100%;padding:12px;background:linear-gradient(135deg,#6c5ce7,#fd79a8);color:#fff;border:none;border-radius:50px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s}
+    button:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(108,92,231,0.3)}
+    .result{text-align:center;padding:16px 0}
+    .result .choice{font-size:1.4rem;font-weight:700;color:#00b894;margin:8px 0}
+    .result .reason{font-size:0.85rem;color:#636e72;line-height:1.5}
+    .result .emoji{font-size:2rem}
+    .footer{text-align:center;margin-top:12px;font-size:0.7rem;color:#b2bec3}
+    .footer a{color:#6c5ce7;text-decoration:none}
+    .powered{text-align:center;margin-top:12px;font-size:0.75rem;color:#b2bec3}
+    .powered a{color:#6c5ce7;text-decoration:none;font-weight:600}
+    .error{color:#e17055;font-size:0.85rem;text-align:center;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <h2>✨ Decision Help</h2>
+    <p class="sub">What's your question?</p>
+    <form id="form">
+      <input type="text" id="question" placeholder="e.g. Should I learn guitar?" required>
+      <select id="mode">
+        <option value="this_or_that">This or That</option>
+        <option value="yes_no">Yes or No</option>
+        <option value="pick_from_list">Pick from List</option>
+      </select>
+      <div id="optionsArea">
+        <input type="text" id="opt1" placeholder="Option A" required>
+        <input type="text" id="opt2" placeholder="Option B" required>
+      </div>
+      <button type="submit">Help me decide!</button>
+    </form>
+    <div id="result" class="result" style="display:none"></div>
+    <div class="powered">
+      <a href="https://decision-help-production.up.railway.app" target="_blank">Powered by Decision Help</a>
+    </div>
+  </div>
+
+  <script>
+    const POS = ['learn','study','practice','improve','grow','help','friend','family','love','care','creative','art','music','sports','exercise','health','meditate','yoga','read','write','cook','travel','explore','nature','volunteer','teach','inspire','career','skill','hobby','fitness','code','build','design','start','business','dream','goal','adventure'];
+
+    function smartDecide(options, question) {
+      const qLower = question.toLowerCase();
+      let qScore = 0;
+      for (const w of POS) {
+        const r = new RegExp('\\b' + w + '\\b', 'i');
+        if (r.test(qLower)) qScore += 10;
+      }
+      const bias = Math.min(qScore / 100, 0.4);
+      const scores = options.map(opt => {
+        let w = 1 + Math.random() * 2;
+        const l = opt.toLowerCase();
+        for (const pw of POS) {
+          const r = new RegExp('\\b' + pw + '\\b', 'i');
+          if (r.test(l)) w += 0.5;
+        }
+        if (opt.length > 25) w += 0.2;
+        return w * (1 + bias);
+      });
+      const total = scores.reduce((a,b) => a+b, 0);
+      let rand = Math.random() * total, sum = 0;
+      for (let i = 0; i < scores.length; i++) {
+        sum += scores[i];
+        if (rand <= sum) return options[i];
+      }
+      return options[0];
+    }
+
+    function smartReason(choice, mode) {
+      if (mode === 'yes_no') {
+        if (choice === 'Yes') {
+          return ['Absolutely yes! This opens wonderful opportunities.','Yes! Your heart is guiding you right.','The answer is YES — embrace this path.'][Math.floor(Math.random()*3)];
+        } else {
+          return ['Not now — and that is okay. Trust the timing.','No — sometimes the best choice is to wait.','The answer is no for now. Something better may come.'][Math.floor(Math.random()*3)];
+        }
+      }
+      const emojis = ['✨','🎯','💡','🌟','🌈'];
+      const e = emojis[Math.floor(Math.random()*emojis.length)];
+      const texts = [
+        e+' '+choice+' aligns perfectly with your goals.',
+        e+' The clearest path forward is '+choice+'.',
+        e+' '+choice+' brings the most joy and growth.',
+        e+' Go with '+choice+' — your intuition knows best.'
+      ];
+      return texts[Math.floor(Math.random()*texts.length)];
+    }
+
+    const form = document.getElementById('form');
+    const modeSelect = document.getElementById('mode');
+    const optionsArea = document.getElementById('optionsArea');
+    const resultDiv = document.getElementById('result');
+
+    modeSelect.addEventListener('change', () => {
+      if (modeSelect.value === 'yes_no') {
+        optionsArea.innerHTML = '';
+      } else if (modeSelect.value === 'pick_from_list') {
+        optionsArea.innerHTML = '<input type="text" class="list-opt" placeholder="Option 1" required><input type="text" class="list-opt" placeholder="Option 2" required>';
+      } else {
+        optionsArea.innerHTML = '<input type="text" id="opt1" placeholder="Option A" required><input type="text" id="opt2" placeholder="Option B" required>';
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const question = document.getElementById('question').value;
+      const mode = modeSelect.value;
+      let options = [];
+      
+      if (mode === 'yes_no') {
+        options = ['Yes', 'No'];
+      } else if (mode === 'this_or_that') {
+        const a = document.getElementById('opt1').value;
+        const b = document.getElementById('opt2').value;
+        if (!a || !b) return;
+        options = [a, b];
+      } else {
+        const inputs = document.querySelectorAll('.list-opt');
+        inputs.forEach(i => { if(i.value.trim()) options.push(i.value.trim()); });
+        if (options.length < 2) return;
+      }
+
+      const choice = smartDecide(options, question);
+      const reason = smartReason(choice, mode);
+      
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<div class="emoji">🎉</div><div class="choice">' + choice + '</div><div class="reason">' + reason + '</div>';
+    });
+  </script>
+</body>
+</html>
