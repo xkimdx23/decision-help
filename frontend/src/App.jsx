@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ReactGA from 'react-ga4';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -11,6 +12,8 @@ import Profile from './pages/Profile';
 import Community from './pages/Community';
 import About from './pages/About';
 import ForgotPassword from './pages/ForgotPassword';
+import BlogList from './pages/BlogList';
+import BlogPost from './pages/BlogPost';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import Navbar from './components/Navbar';
 
@@ -92,38 +95,47 @@ function App() {
   };
 
   return (
-    <Router>
-      <PageViewTracker />
-      <div className="app">
-        <Navbar 
-          user={user} 
-          setUser={setUser} 
-          language={language} 
-          t={t}
-          toggleDarkMode={toggleDarkMode}
-          isDarkMode={isDarkMode}
-        />
-        <LanguageSwitcher language={language} setLanguage={setLanguage} />
-        
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home user={user} language={language} t={t} API_URL={API_URL} />} />
-            <Route path="/login" element={!user ? <Login setUser={setUser} t={t} API_URL={API_URL} /> : <Navigate to="/" />} />
-            <Route path="/register" element={!user ? <Register setUser={setUser} t={t} API_URL={API_URL} /> : <Navigate to="/" />} />
-            <Route path="/history" element={user ? <History user={user} language={language} t={t} API_URL={API_URL} /> : <Navigate to="/login" />} />
-            <Route path="/profile" element={user ? <Profile user={user} setUser={setUser} language={language} t={t} API_URL={API_URL} /> : <Navigate to="/login" />} />
-            <Route path="/community" element={<Community language={language} t={t} API_URL={API_URL} />} />
-            <Route path="/about" element={<About language={language} t={t} />} />
-            <Route path="/forgot-password" element={<ForgotPassword t={t} API_URL={API_URL} />} />
-            <Route path="/verify-email/:token" element={<VerifyEmail API_URL={API_URL} t={t} />} />
-            <Route path="/reset-password/:token" element={<ResetPassword API_URL={API_URL} t={t} />} />
-          </Routes>
-        </main>
-        <footer className="disclaimer-bar">
-          <p>{t('disclaimer')}</p>
-        </footer>
-      </div>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <Helmet>
+          <title>Decision Help — Free Online Decision Maker Tool</title>
+          <meta name="description" content="Make better decisions with our free online decision maker. Choose between options, get yes/no answers, or pick from a list. No signup required. 12 languages." />
+          <meta name="keywords" content="decision maker, help me decide, this or that, yes or no, decision tool, online decision helper" />
+        </Helmet>
+        <PageViewTracker />
+        <div className="app">
+          <Navbar 
+            user={user} 
+            setUser={setUser} 
+            language={language} 
+            t={t}
+            toggleDarkMode={toggleDarkMode}
+            isDarkMode={isDarkMode}
+          />
+          <LanguageSwitcher language={language} setLanguage={setLanguage} />
+          
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home user={user} language={language} t={t} API_URL={API_URL} />} />
+              <Route path="/login" element={!user ? <Login setUser={setUser} t={t} API_URL={API_URL} /> : <Navigate to="/" />} />
+              <Route path="/register" element={!user ? <Register setUser={setUser} t={t} API_URL={API_URL} /> : <Navigate to="/" />} />
+              <Route path="/history" element={user ? <History user={user} language={language} t={t} API_URL={API_URL} /> : <Navigate to="/login" />} />
+              <Route path="/profile" element={user ? <Profile user={user} setUser={setUser} language={language} t={t} API_URL={API_URL} /> : <Navigate to="/login" />} />
+              <Route path="/community" element={<Community language={language} t={t} API_URL={API_URL} />} />
+              <Route path="/about" element={<About language={language} t={t} />} />
+              <Route path="/blog" element={<BlogList t={t} />} />
+              <Route path="/blog/:slug" element={<BlogPost t={t} />} />
+              <Route path="/forgot-password" element={<ForgotPassword t={t} API_URL={API_URL} />} />
+              <Route path="/verify-email/:token" element={<VerifyEmail API_URL={API_URL} t={t} />} />
+              <Route path="/reset-password/:token" element={<ResetPassword API_URL={API_URL} t={t} />} />
+            </Routes>
+          </main>
+          <footer className="disclaimer-bar">
+            <p>{t('disclaimer')}</p>
+          </footer>
+        </div>
+      </Router>
+    </HelmetProvider>
   );
 }
 

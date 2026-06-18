@@ -20,6 +20,7 @@ function Navbar({ user, setUser, t, toggleDarkMode, isDarkMode }) {
         <Link to="/">{t('home')}</Link>
         {user && <Link to="/history">{t('history')}</Link>}
         <Link to="/community">{t('community')}</Link>
+        <Link to="/blog">Blog</Link>
         <Link to="/about">{t('about')}</Link>
         <button onClick={toggleDarkMode} className="dark-mode-toggle">
           {isDarkMode ? '☀️' : '🌙'}
