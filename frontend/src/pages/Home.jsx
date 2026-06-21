@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
 import AdUnit from '../components/AdUnit';
+import { getDailyQuestion } from '../data/dailyQuestions';
 
 function Home({ user, language, t, API_URL }) {
+  const daily = getDailyQuestion();
   const [mode, setMode] = useState('this_or_that');
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState(['', '']);
@@ -22,6 +24,20 @@ function Home({ user, language, t, API_URL }) {
       setTimeout(() => setShowConfetti(false), 3000);
     }
   }, [showConfetti]);
+
+  const tryDailyQuestion = () => {
+    setQuestion(daily.question);
+    setMode(daily.mode);
+    if (daily.mode === 'this_or_that' && daily.options) {
+      setOptions(daily.options);
+    }
+    if (daily.mode === 'pick_from_list') {
+      setListOptions(['', '']);
+    }
+    setResult(null);
+    setGifUrl('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const dismissDonation = () => {
     setShowDonation(false);
@@ -144,6 +160,12 @@ function Home({ user, language, t, API_URL }) {
       
       <h1 className="title">{t('make_decision')}</h1>
       <p className="subtitle">{t('positive_choices')}</p>
+
+      <div className="daily-question" onClick={tryDailyQuestion}>
+        <span className="daily-label">📅 Daily Question</span>
+        <span className="daily-text">{daily.question}</span>
+        <span className="daily-try">Try it →</span>
+      </div>
 
       <div className="mode-selector">
         <button className={mode === 'this_or_that' ? 'active' : ''} onClick={() => setMode('this_or_that')}>
