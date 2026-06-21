@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 import AdUnit from '../components/AdUnit';
 
 function Home({ user, language, t, API_URL }) {
@@ -14,6 +15,7 @@ function Home({ user, language, t, API_URL }) {
   const [gifUrl, setGifUrl] = useState('');
   const giphyKey = import.meta.env.VITE_GIPHY_API_KEY || '';
   const [showDonation, setShowDonation] = useState(localStorage.getItem('hideDonation') !== 'true');
+  const resultRef = useRef(null);
 
   useEffect(() => {
     if (showConfetti) {
@@ -122,6 +124,20 @@ function Home({ user, language, t, API_URL }) {
     }
   };
 
+  const downloadAsImage = async () => {
+    if (resultRef.current) {
+      try {
+        const canvas = await html2canvas(resultRef.current, { scale: 2, backgroundColor: null });
+        const link = document.createElement('a');
+        link.download = 'decision-help-result.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      } catch (err) {
+        console.error('Image capture failed:', err);
+      }
+    }
+  };
+
   return (
     <div className="home">
       {showConfetti && <div className="confetti">🎉✨🌟🎊</div>}
@@ -208,7 +224,7 @@ function Home({ user, language, t, API_URL }) {
       {error && <div className="error-message">⚠️ {error}</div>}
 
       {result && (
-        <div className="result-card">
+        <div className="result-card" ref={resultRef}>
           {gifUrl && <img src={gifUrl} alt="Celebration" className="result-gif" />}
           <div className="result-content">
             <h2>{t('final_decision')}</h2>
@@ -223,6 +239,9 @@ function Home({ user, language, t, API_URL }) {
               </button>
               <button onClick={shareOnTwitter} className="share-btn" style={{ background:'#1DA1F2', color:'#fff', border:'none', padding:'12px 24px', borderRadius:'50px', cursor:'pointer', fontWeight:600 }}>
                 🐦 Tweet
+              </button>
+              <button onClick={downloadAsImage} className="share-btn" style={{ background:'#00b894', color:'#fff', border:'none', padding:'12px 24px', borderRadius:'50px', cursor:'pointer', fontWeight:600 }}>
+                📸 Save Image
               </button>
             </div>
           </div>
