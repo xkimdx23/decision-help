@@ -252,6 +252,16 @@ function Home({ user, language, t, API_URL }) {
         </div>
       )}
 
+      <div className="seen-on">
+        <span className="seen-on-label">As seen on</span>
+        <div className="seen-on-badges">
+          <a href="https://www.producthunt.com/posts/decision-help" target="_blank" rel="noopener noreferrer" className="seen-on-badge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm0 18.182c-4.523 0-8.182-3.659-8.182-8.182S5.477 1.818 10 1.818s8.182 3.659 8.182 8.182-3.659 8.182-8.182 8.182z" fill="#DA552F"/><path d="M12.727 8.182h-3.636v2.727h3.636a1.364 1.364 0 100-2.727z" fill="#DA552F"/><path d="M9.09 10.909h.909v2.727h-.909v-2.727z" fill="#DA552F"/></svg>
+            Product Hunt
+          </a>
+        </div>
+      </div>
+
       <AdUnit slot="4690463740" />
     </div>
   );
