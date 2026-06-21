@@ -1,0 +1,13 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6c5ce7"/>
+      <stop offset="100%" style="stop-color:#fd79a8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="600" y="260" font-family="system-ui,sans-serif" font-size="72" font-weight="800" fill="white" text-anchor="middle" letter-spacing="-1">Decision Help</text>
+  <text x="600" y="340" font-family="system-ui,sans-serif" font-size="32" font-weight="500" fill="rgba(255,255,255,0.85)" text-anchor="middle">Free AI-Powered Decision Maker</text>
+  <text x="600" y="400" font-family="system-ui,sans-serif" font-size="26" fill="rgba(255,255,255,0.7)" text-anchor="middle">This or That · Yes or No · Pick from List</text>
+  <text x="600" y="470" font-family="system-ui,sans-serif" font-size="22" fill="rgba(255,255,255,0.6)" text-anchor="middle">No signup required · 12 languages · 100% free</text>
+</svg>
