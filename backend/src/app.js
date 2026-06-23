@@ -44,6 +44,12 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 
+// ads.txt for AdSense verification
+app.get('/ads.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('google.com, pub-6057388520703385, DIRECT, f08c47fec0942fa0');
+});
+
 // Serve built frontend in production
 const frontendDist = path.join(__dirname, '../../frontend/dist');
 app.use(express.static(frontendDist));
