@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function ForgotPassword({ t, API_URL }) {
   const [email, setEmail] = useState('');
@@ -26,6 +27,11 @@ function ForgotPassword({ t, API_URL }) {
 
   return (
     <div className="auth-page">
+      <Helmet>
+        <title>Forgot Password — Decision Help</title>
+        <meta name="description" content="Reset your Decision Help account password. Enter your email and we'll send you a reset link." />
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <div className="auth-card">
         <div className="auth-header">🔑 {t('reset_password')}</div>
         <form onSubmit={handleSubmit} className="auth-form">

@@ -1,8 +1,22 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 function About({ t }) {
+  const siteUrl = 'https://decision-help-production.up.railway.app';
   return (
     <div className="about">
+      <Helmet>
+        <title>About — Decision Help | Free Decision Maker Tool</title>
+        <link rel="canonical" href={`${siteUrl}/about`} />
+        <meta name="description" content="Learn about Decision Help — the free positive-bias decision maker tool. Our mission to help people break analysis paralysis with this or that, yes/no, and pick from list modes." />
+        <meta name="keywords" content="about decision help, decision maker tool, free decision helper" />
+        <meta property="og:title" content="About — Decision Help" />
+        <meta property="og:description" content="Free positive-bias decision maker tool. Break analysis paralysis instantly." />
+        <meta property="og:url" content={`${siteUrl}/about`} />
+        <meta property="og:image" content={`${siteUrl}/og-image.svg`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       <h1>{t('about_title')}</h1>
       
       <div className="about-section">

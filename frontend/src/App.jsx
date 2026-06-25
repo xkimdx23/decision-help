@@ -100,7 +100,6 @@ function App() {
         <Helmet>
           <title>Decision Help — Free Online Decision Maker Tool</title>
           <meta name="description" content="Make better decisions with our free online decision maker. Choose between options, get yes/no answers, or pick from a list. No signup required. 12 languages." />
-          <meta name="keywords" content="decision maker, help me decide, this or that, yes or no, decision tool, online decision helper" />
         </Helmet>
         <PageViewTracker />
         <div className="app">

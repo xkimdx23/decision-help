@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function Login({ setUser, t, API_URL }) {
   const [email, setEmail] = useState('');
@@ -30,6 +31,11 @@ function Login({ setUser, t, API_URL }) {
 
   return (
     <div className="auth-page">
+      <Helmet>
+        <title>Login — Decision Help</title>
+        <meta name="description" content="Log in to Decision Help to save your decision history and access personalized features." />
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <div className="auth-card">
         <div className="auth-header">🔐 {t('login')}</div>
         <form onSubmit={handleSubmit} className="auth-form">

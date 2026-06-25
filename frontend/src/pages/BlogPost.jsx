@@ -6,6 +6,7 @@ import blogPosts from '../data/blogPosts';
 function BlogPost({ t }) {
   const { slug } = useParams();
   const post = blogPosts.find(p => p.slug === slug);
+  const siteUrl = 'https://decision-help-production.up.railway.app';
 
   if (!post) {
     return (
@@ -19,12 +20,34 @@ function BlogPost({ t }) {
     );
   }
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.metaDesc,
+    "url": `${siteUrl}/blog/${post.slug}`,
+    "datePublished": post.date,
+    "author": { "@type": "Organization", "name": "Decision Help" }
+  };
+
   return (
     <div className="blog-post">
       <Helmet>
         <title>{post.title} — Decision Help</title>
+        <link rel="canonical" href={`${siteUrl}/blog/${post.slug}`} />
         <meta name="description" content={post.metaDesc} />
         <meta name="keywords" content={post.tags.join(', ')} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.metaDesc} />
+        <meta property="og:url" content={`${siteUrl}/blog/${post.slug}`} />
+        <meta property="og:image" content={`${siteUrl}/og-image.svg`} />
+        <meta property="og:type" content="article" />
+        <meta property="article:published_time" content={post.date} />
+        <meta property="article:author" content="Decision Help" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.metaDesc} />
+        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       </Helmet>
       <p className="blog-breadcrumb"><Link to="/blog">← Blog</Link></p>
       <article>

@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
+import { Helmet } from 'react-helmet-async';
 import AdUnit from '../components/AdUnit';
 import { getDailyQuestion } from '../data/dailyQuestions';
 
 function Home({ user, language, t, API_URL }) {
   const daily = getDailyQuestion();
+  const siteUrl = 'https://decision-help-production.up.railway.app';
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Decision Help",
+    "url": siteUrl,
+    "description": "Free positive-bias decision maker tool. Choose between options, get yes/no answers, or pick from a list.",
+    "logo": `${siteUrl}/logo.svg`
+  };
+
   const [mode, setMode] = useState('this_or_that');
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState(['', '']);
@@ -155,7 +167,24 @@ function Home({ user, language, t, API_URL }) {
   };
 
   return (
-    <div className="home">
+    <>
+      <Helmet>
+        <title>Decision Help — Free Online Decision Maker Tool</title>
+        <link rel="canonical" href={siteUrl} />
+        <meta name="description" content="Make better decisions with our free online decision maker. Choose between options (this or that), get yes/no answers, or pick from a list. No signup. 12 languages." />
+        <meta name="keywords" content="decision maker, help me decide, this or that, yes or no, decision tool, online decision helper, free decision making tool" />
+        <meta property="og:title" content="Decision Help — Free Online Decision Maker Tool" />
+        <meta property="og:description" content="Make better decisions with our free online decision maker. This or that, yes/no, or pick from a list. No signup required." />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:image" content={`${siteUrl}/og-image.svg`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Decision Help — Free Online Decision Maker Tool" />
+        <meta name="twitter:description" content="Make better decisions with our free online decision maker. No signup required." />
+        <meta name="twitter:image" content={`${siteUrl}/og-image.svg`} />
+        <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
+      </Helmet>
+      <div className="home">
       {showConfetti && <div className="confetti">🎉✨🌟🎊</div>}
       
       <h1 className="title">{t('make_decision')}</h1>
@@ -295,6 +324,7 @@ function Home({ user, language, t, API_URL }) {
 
       <AdUnit slot="4690463740" />
     </div>
+    </>
   );
 }
 

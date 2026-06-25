@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function History({ user, t, API_URL }) {
   const [decisions, setDecisions] = useState([]);
@@ -34,6 +35,11 @@ function History({ user, t, API_URL }) {
 
   return (
     <div className="history">
+      <Helmet>
+        <title>Decision History — Decision Help</title>
+        <meta name="description" content="View your saved decision history on Decision Help. Review past choices and track your decision-making patterns." />
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <h1>{t('decision_history')}</h1>
       
       {decisions.length === 0 ? (

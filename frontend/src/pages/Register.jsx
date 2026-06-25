@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function Register({ setUser, t, API_URL }) {
   const [username, setUsername] = useState('');
@@ -42,6 +43,11 @@ function Register({ setUser, t, API_URL }) {
 
   return (
     <div className="auth-page">
+      <Helmet>
+        <title>Register — Decision Help</title>
+        <meta name="description" content="Create a free account on Decision Help to save your decision history, customize preferences, and access all features." />
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <div className="auth-card">
         <div className="auth-header">📝 {t('register')}</div>
         <form onSubmit={handleSubmit} className="auth-form">

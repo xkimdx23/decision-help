@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function Profile({ user, setUser, t, API_URL }) {
   const [username, setUsername] = useState(user.username);
@@ -39,6 +40,11 @@ function Profile({ user, setUser, t, API_URL }) {
 
   return (
     <div className="profile">
+      <Helmet>
+        <title>My Profile — Decision Help</title>
+        <meta name="description" content="Manage your Decision Help account profile, preferences, and settings." />
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <h1>{t('my_profile')}</h1>
       
       {message && <div className="message">{message}</div>}

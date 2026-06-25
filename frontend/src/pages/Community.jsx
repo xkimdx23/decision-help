@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function Community({ t, API_URL }) {
+  const siteUrl = 'https://decision-help-production.up.railway.app';
   const [decisions, setDecisions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -36,6 +38,17 @@ function Community({ t, API_URL }) {
 
   return (
     <div className="community">
+      <Helmet>
+        <title>Community Decisions — Decision Help</title>
+        <link rel="canonical" href={`${siteUrl}/community`} />
+        <meta name="description" content="Browse public decisions made with Decision Help. See how others use our free decision maker for this or that, yes/no, and pick from list choices." />
+        <meta name="keywords" content="community decisions, public decisions, decision maker examples" />
+        <meta property="og:title" content="Community Decisions — Decision Help" />
+        <meta property="og:description" content="Browse public decisions made with our free decision maker tool." />
+        <meta property="og:url" content={`${siteUrl}/community`} />
+        <meta property="og:image" content={`${siteUrl}/og-image.svg`} />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <h1>{t('community_decisions')}</h1>
       <p>{t('community_description')}</p>
       
