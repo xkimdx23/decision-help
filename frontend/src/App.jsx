@@ -131,6 +131,16 @@ function App() {
           </main>
           <footer className="disclaimer-bar">
             <p>{t('disclaimer')}</p>
+            <div className="badge-row">
+              <a href="https://pitchwall.co/product/decision-help?utm_source=badge" style={{ display: 'inline-flex' }}>
+                <img
+                  src="https://pitchwall.co/images/listed/pitchwall-light.png"
+                  width="180"
+                  height="60"
+                  alt="Listed on PitchWall"
+                />
+              </a>
+            </div>
           </footer>
         </div>
       </Router>

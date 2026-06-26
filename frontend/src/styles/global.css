@@ -953,8 +953,15 @@ body.dark-mode .home-header h1 {
 }
 .disclaimer-bar p {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 12px;
   line-height: 1.5;
+}
+.badge-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 .disclaimer-section {
   border-left: 3px solid var(--warning);
