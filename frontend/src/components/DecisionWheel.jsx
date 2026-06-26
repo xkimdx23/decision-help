@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 const BAD_WORDS = ['kill','murder','sex','porn','naked','nude','sexual','penis','vagina','orgasm','escort','prostitute','strip','xxx','nsfw','hookup','horny','milf','sugar daddy','sugar baby','onlyfans','blowjob','anal','bdsm','kink','fetish','slut','whore','drug','cocaine','heroin','weed','marijuana','meth','hate','racist','nazi','terrorist','fuck','shit','bitch','ass','damn'];
 
@@ -9,20 +9,21 @@ function hasBadWords(text) {
 
 const COLORS = ['#6C5CE7', '#00B894', '#FDCB6E', '#E17055', '#0984E3', '#00CEC9', '#FD79A8', '#A29BFE', '#55EFC4', '#FAB1A0'];
 
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
 function DecisionWheel({ options, onResult }) {
   const canvasRef = useRef(null);
+  const animRef = useRef(null);
   const [spinning, setSpinning] = useState(false);
-  const [rotation, setRotation] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const currentRotation = useRef(0);
 
   const numSlices = options.length || 2;
   const sliceAngle = 360 / numSlices;
 
-  useEffect(() => {
-    drawWheel(rotation);
-  }, [rotation, options]);
-
-  const drawWheel = (rot) => {
+  const drawWheel = useCallback((rot) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -76,7 +77,13 @@ function DecisionWheel({ options, onResult }) {
     ctx.closePath();
     ctx.fillStyle = '#E17055';
     ctx.fill();
-  };
+  }, [numSlices, sliceAngle, options]);
+
+  useEffect(() => {
+    if (!animRef.current) {
+      drawWheel(currentRotation.current);
+    }
+  }, [options, drawWheel]);
 
   const spin = () => {
     if (spinning || options.length < 2) return;
@@ -84,34 +91,54 @@ function DecisionWheel({ options, onResult }) {
       alert('Please keep it positive! Remove inappropriate content.');
       return;
     }
+
     setSpinning(true);
     setSelectedIndex(null);
-    const spins = 3 + Math.floor(Math.random() * 3);
-    const extraAngle = Math.floor(Math.random() * 360);
-    const totalRotation = rotation + spins * 360 + extraAngle;
-    setRotation(totalRotation);
 
-    setTimeout(() => {
-      const normalized = totalRotation % 360;
-      const index = Math.floor((360 - normalized) / sliceAngle) % numSlices;
-      const finalIndex = index < 0 ? index + numSlices : index;
-      setSelectedIndex(finalIndex);
-      setSpinning(false);
-      if (onResult && options[finalIndex]) {
-        onResult(options[finalIndex]);
+    const spins = 4 + Math.floor(Math.random() * 3);
+    const extraAngle = 15 + Math.floor(Math.random() * 340);
+    const totalDelta = spins * 360 + extraAngle;
+    const startRot = currentRotation.current;
+    const targetRot = startRot + totalDelta;
+
+    const duration = 3500 + Math.random() * 1000;
+    const startTime = performance.now();
+
+    const animate = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      const current = startRot + totalDelta * eased;
+      currentRotation.current = current;
+      drawWheel(current);
+
+      if (progress < 1) {
+        animRef.current = requestAnimationFrame(animate);
+      } else {
+        animRef.current = null;
+        const normalized = targetRot % 360;
+        const index = Math.floor((360 - normalized + sliceAngle / 2) / sliceAngle) % numSlices;
+        const finalIndex = index < 0 ? index + numSlices : index;
+        setSelectedIndex(finalIndex);
+        setSpinning(false);
+        if (onResult && options[finalIndex]) {
+          onResult(options[finalIndex]);
+        }
       }
-    }, 2000);
+    };
+
+    animRef.current = requestAnimationFrame(animate);
   };
 
   return (
     <div className="wheel-container">
       <canvas ref={canvasRef} width="280" height="280" className="wheel-canvas" />
       <button onClick={spin} disabled={spinning || options.length < 2} className="wheel-spin-btn">
-        {spinning ? 'Spinning...' : 'Spin the Wheel'}
+        {spinning ? 'Spinning...' : '🎡 Spin the Wheel'}
       </button>
       {selectedIndex !== null && (
         <div className="wheel-result">
-          <strong>Result:</strong> {options[selectedIndex]}
+          <span className="wheel-result-label">Result:</span> {options[selectedIndex]}
         </div>
       )}
       {options.length < 2 && <p className="wheel-hint">Enter at least 2 options above</p>}
