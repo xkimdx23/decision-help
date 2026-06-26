@@ -3,6 +3,8 @@ import axios from 'axios';
 import html2canvas from 'html2canvas';
 import { Helmet } from 'react-helmet-async';
 import AdUnit from '../components/AdUnit';
+import DecisionWheel from '../components/DecisionWheel';
+import Newsletter from '../components/Newsletter';
 import { getDailyQuestion } from '../data/dailyQuestions';
 
 function Home({ user, language, t, API_URL }) {
@@ -206,6 +208,9 @@ function Home({ user, language, t, API_URL }) {
         <button className={mode === 'pick_from_list' ? 'active' : ''} onClick={() => setMode('pick_from_list')}>
           📋 {t('pick_from_list')}
         </button>
+        <button className={mode === 'wheel' ? 'active' : ''} onClick={() => setMode('wheel')}>
+          🎡 {t('spin_wheel')}
+        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="decision-form">
@@ -272,6 +277,35 @@ function Home({ user, language, t, API_URL }) {
         </button>
       </form>
 
+      {mode === 'wheel' && (
+        <div className="wheel-section">
+          <h3 className="wheel-title">🎡 {t('spin_wheel')}</h3>
+          <div className="wheel-options-input">
+            {listOptions.map((opt, index) => (
+              <div key={index} className="list-option-item">
+                <input
+                  type="text"
+                  value={opt}
+                  onChange={(e) => updateListOption(index, e.target.value)}
+                  placeholder={`${t('option')} ${index + 1}`}
+                  required={index < 2}
+                />
+                {listOptions.length > 2 && (
+                  <button type="button" onClick={() => removeListOption(index)}>🗑️</button>
+                )}
+              </div>
+            ))}
+            {listOptions.length < 10 && (
+              <button type="button" onClick={addListOption} className="add-option">+ {t('add_option')}</button>
+            )}
+          </div>
+          <DecisionWheel options={listOptions.filter(o => o.trim())} onResult={(val) => {
+            setResult({ result: val, reason: 'The wheel has spoken!' });
+            setShowConfetti(true);
+          }} />
+        </div>
+      )}
+
       {error && <div className="error-message">⚠️ {error}</div>}
 
       {result && (
@@ -300,6 +334,8 @@ function Home({ user, language, t, API_URL }) {
       )}
 
       {result && <AdUnit slot="7401516863" />}
+
+      <Newsletter API_URL={API_URL} />
 
       {showDonation && (
         <div className="donation-card">

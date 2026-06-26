@@ -7,6 +7,7 @@ const xss = require('xss');
 const authRoutes = require('./routes/authRoutes');
 const decisionRoutes = require('./routes/decisionRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const subscriberRoutes = require('./routes/subscriberRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -38,6 +39,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api', decisionRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api', subscriberRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
