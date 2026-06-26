@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+const BAD_WORDS = ['kill','murder','sex','porn','naked','nude','sexual','penis','vagina','orgasm','escort','prostitute','strip','xxx','nsfw','hookup','horny','milf','sugar daddy','sugar baby','onlyfans','blowjob','anal','bdsm','kink','fetish','slut','whore','drug','cocaine','heroin','weed','marijuana','meth','hate','racist','nazi','terrorist','fuck','shit','bitch','ass','damn'];
+
+function hasBadWords(text) {
+  const lower = text.toLowerCase();
+  return BAD_WORDS.some(w => lower.includes(w));
+}
+
 const COLORS = ['#6C5CE7', '#00B894', '#FDCB6E', '#E17055', '#0984E3', '#00CEC9', '#FD79A8', '#A29BFE', '#55EFC4', '#FAB1A0'];
 
 function DecisionWheel({ options, onResult }) {
@@ -73,6 +80,10 @@ function DecisionWheel({ options, onResult }) {
 
   const spin = () => {
     if (spinning || options.length < 2) return;
+    if (options.some(hasBadWords)) {
+      alert('Please keep it positive! Remove inappropriate content.');
+      return;
+    }
     setSpinning(true);
     setSelectedIndex(null);
     const spins = 3 + Math.floor(Math.random() * 3);

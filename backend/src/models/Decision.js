@@ -12,7 +12,7 @@ const decisionSchema = new mongoose.Schema({
   },
   mode: {
     type: String,
-    enum: ['this_or_that', 'yes_no', 'pick_from_list'],
+    enum: ['this_or_that', 'yes_no', 'pick_from_list', 'wheel'],
     required: true
   },
   question: {

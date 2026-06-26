@@ -5,15 +5,18 @@ const BLACKLIST = [
   'abuse', 'torture', 'blood', 'injury', 'hurt', 'pain', 'die', 'death',
   'suicide', 'self-harm', 'cut', 'kill myself', 'end my life',
   'sex', 'porn', 'naked', 'nude', 'erotic', 'sexual', 'penis', 'vagina',
-  'orgasm', 'escort', 'prostitute', 'strip', 'xxx', 'adult',
+  'orgasm', 'escort', 'prostitute', 'strip', 'xxx', 'adult', '18+', 'nsfw',
+  'hookup', 'horny', 'milf', 'sugar daddy', 'sugar baby', 'onlyfans',
+  'cam girl', 'booty', 'thong', 'lingerie', 'bikini', 'sex tape',
+  'blowjob', 'anal', 'bondage', 'bdsm', 'kink', 'fetish', 'slut', 'whore',
   'drug', 'cocaine', 'heroin', 'weed', 'marijuana', 'alcohol', 'drunk',
-  'cigarette', 'meth', 'opium', 'lsd', 'ecstasy',
+  'cigarette', 'meth', 'opium', 'lsd', 'ecstasy', 'vape', 'smoke weed',
   'hate', 'racist', 'nazi', 'terrorist', 'stupid', 'idiot', 'moron',
   'steal', 'rob', 'burglary', 'hack', 'fraud', 'scam', 'cheat', 'illegal',
   'toxic', 'harass', 'bully', 'threat', 'violent',
   'gambling', 'casino', 'bet', 'lottery',
   'satanic', 'curse', 'demon', 'hell',
-  'puke', 'vomit', 'poop', 'shit', 'fuck', 'ass', 'bitch', 'damn'
+  'puke', 'vomit', 'poop', 'shit', 'fuck', 'ass', 'bitch', 'damn', 'crap'
 ];
 
 const POSITIVE_KEYWORDS = [
