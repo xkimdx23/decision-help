@@ -343,6 +343,242 @@ const blogPosts = [
 
       <p>Save your mental energy for what matters. Use our <a href="/">free decision tool</a> for the small stuff.</p>
     `
+  },
+  {
+    slug: "is-it-worth-it-decision-guide",
+    title: "How to Decide If Something Is Worth It: A Practical Guide",
+    metaDesc: "Struggling to decide if something is worth your time or money? Use this practical guide and free decision tool to make smarter cost-benefit choices.",
+    date: "2026-06-26",
+    tags: ["is it worth it", "cost benefit", "decision making"],
+    content: `
+      <p>"Is it worth it?" is one of the most common questions we ask ourselves. Is that expensive course worth it? Is moving to a new city worth it? Is leaving my relationship worth it?</p>
+
+      <p>The problem is "worth it" is subjective. What's worth it to one person isn't to another. Here's a framework to figure it out for yourself.</p>
+
+      <h2>The Cost-Benefit Ratio</h2>
+      <p>List the costs (money, time, energy, stress) and the benefits (growth, happiness, money, experience) on each side. If the benefits clearly outweigh the costs, it's worth it. If they're close, use our <a href="/">decision maker tool</a> to break the tie.</p>
+
+      <h2>The 72-Hour Rule</h2>
+      <p>If you can wait 72 hours before deciding, do it. Impulse decisions to buy or quit are often regretted. After 3 days, if you still want it, the answer is yes.</p>
+
+      <h2>Ask Someone Who's Done It</h2>
+      <p>The fastest way to know if something is worth it: find someone who's already done it and ask them. Their honest answer will save you months of deliberation.</p>
+
+      <p>Still not sure? Try our <a href="/">free decision tool</a> and see how you feel about the answer.</p>
+    `
+  },
+  {
+    slug: "should-i-quit-my-job",
+    title: "Should I Quit My Job? A Decision-Making Guide",
+    metaDesc: "Thinking about quitting your job but can't decide? Use this guide and our free decision maker to figure out if it's time to leave or stay.",
+    date: "2026-06-26",
+    tags: ["should I quit my job", "career change", "job decision"],
+    content: `
+      <p>"Should I quit my job?" It's one of the biggest career decisions you'll ever make. The fear of the unknown versus the pain of staying. Here's how to decide.</p>
+
+      <h2>Signs It's Time to Quit</h2>
+      <ul>
+        <li>You dread Sunday nights (the Sunday Scaries are every day)</li>
+        <li>You've stopped learning and growing</li>
+        <li>Your mental or physical health is suffering</li>
+        <li>You have a financial runway (3-6 months savings)</li>
+      </ul>
+
+      <h2>Signs You Should Stay</h2>
+      <ul>
+        <li>You're quitting because of one bad week</li>
+        <li>You haven't tried fixing the problems yet</li>
+        <li>You don't have a plan for what's next</li>
+      </ul>
+
+      <h2>How to Decide</h2>
+      <p>Write down what you'd do if you weren't afraid. If the answer is "leave," you already know what to do. Use our <a href="/">decision maker tool</a> if you need a final push, or check our guide on <a href="/blog/how-to-make-tough-decisions-easier">making tough decisions</a>.</p>
+
+      <p>Your career is a marathon, not a sprint. One decision won't define you. <a href="/">Use our free tool</a> to get clarity.</p>
+    `
+  },
+  {
+    slug: "pick-a-number-between-1-and-10",
+    title: "Pick a Number Between 1 and 10 — Random Number Generator",
+    metaDesc: "Need to pick a number between 1 and 10? Use our free random number generator and decision tool for quick, fun choices. Perfect for games, giveaways, and decisions.",
+    date: "2026-06-26",
+    tags: ["pick a number", "random number generator", "random choice"],
+    content: `
+      <p>Sometimes the simplest tools are the most useful. Our <strong>pick a number between 1 and 10</strong> feature is perfect for games, giveaways, or when you just can't decide.</p>
+
+      <h2>How It Works</h2>
+      <p>Type your question, set your range, and get a random number with a positive reason. It's that simple. Use our <a href="/">Pick from List</a> mode for numbered options.</p>
+
+      <h2>When to Use a Random Number Generator</h2>
+      <ul>
+        <li>Picking a winner for a giveaway</li>
+        <li>Choosing a random player for a game</li>
+        <li>Selecting a random task when you can't decide what to do</li>
+        <li>Breaking a tie between multiple options</li>
+      </ul>
+
+      <p>Our tool goes beyond random numbers — it gives you an encouraging reason with every result. <a href="/">Try it now</a> and see for yourself.</p>
+    `
+  },
+  {
+    slug: "how-to-make-fast-decisions",
+    title: "How to Make Fast Decisions Without Regretting Them Later",
+    metaDesc: "Learn how to make fast decisions with confidence. 5 strategies to speed up your decision-making process without sacrificing quality.",
+    date: "2026-06-25",
+    tags: ["fast decisions", "quick decision making", "speed up decisions"],
+    content: `
+      <p>Slow decisions aren't always better decisions. In fact, research shows that most of the time, your first instinct is correct. Here's how to <strong>make fast decisions</strong> without regret.</p>
+
+      <h2>1. Use the 5-Second Rule</h2>
+      <p>If a decision takes longer than 5 seconds, it's either because it matters or because you're overthinking. For small decisions, if you can't decide in 5 seconds, the answer doesn't matter — pick one. Use our <a href="/">decision tool</a> for instant clarity.</p>
+
+      <h2>2. Trust Your Pattern Recognition</h2>
+      <p>Your brain has years of experience processing similar situations. That "gut feeling" is pattern recognition, not magic. Learn more about <a href="/blog/how-to-trust-your-gut-feeling">trusting your gut</a>.</p>
+
+      <h2>3. Set a Timer</h2>
+      <p>Give yourself 30 seconds per option. When the timer goes off, commit. The deadline forces your brain to stop analyzing and start acting.</p>
+
+      <h2>4. Use the "Worst Case" Test</h2>
+      <p>What's the absolute worst that could happen? If you can handle it, make the decision now. Speed comes from accepting imperfection.</p>
+
+      <h2>5. Practice with Small Decisions</h2>
+      <p>Speed is a skill. Practice by using our <a href="/">free decision maker</a> for everyday choices — what to eat, what to wear, what to watch. Build the muscle, then apply it to bigger decisions.</p>
+    `
+  },
+  {
+    slug: "best-decision-making-apps",
+    title: "5 Best Decision Making Apps and Tools in 2026",
+    metaDesc: "Looking for the best decision-making apps? Compare the top 5 tools including Decision Help to break analysis paralysis and make better choices.",
+    date: "2026-06-25",
+    tags: ["best decision making apps", "decision tools", "decision apps"],
+    content: `
+      <p>There are dozens of decision-making tools out there. Here are the <strong>5 best decision-making apps</strong> in 2026, including our own free tool.</p>
+
+      <h2>1. Decision Help — Best Free Decision Maker</h2>
+      <p>Our own tool (and yes, we're biased). <a href="/">Decision Help</a> offers 3 modes (this or that, yes/no, pick from list), 12 languages, dark mode, and a positive-bias algorithm that gives encouraging answers with reasons. 100% free, no signup needed.</p>
+
+      <h2>2. Tiny Decisions — Best for Fun Choices</h2>
+      <p>A simple spin-the-wheel app for casual decisions. Great for group settings and low-stakes choices.</p>
+
+      <h2>3. Decide Now — Best for Polls</h2>
+      <p>Create polls and let friends vote on your decisions. Useful for social decisions where you want input from others.</p>
+
+      <h2>4. ChoiceMap — Best for Complex Decisions</h2>
+      <p>More advanced framework for weighted decision-making. Good for major life choices but requires more effort.</p>
+
+      <h2>5. Coin Flip — Best for Binary Choices</h2>
+      <p>The classic coin flip, digitized. Simple and effective for yes/no questions.</p>
+
+      <p>For most everyday decisions, our <a href="/">free decision maker</a> is all you need. Try it and see.</p>
+    `
+  },
+  {
+    slug: "coin-flip-decision-maker",
+    title: "Coin Flip Decision Maker: Better Than a Real Coin",
+    metaDesc: "Use our free coin flip decision maker online. Better than a real coin — get a positive reason with every flip. Heads or tails, you win.",
+    date: "2026-06-24",
+    tags: ["coin flip", "heads or tails", "coin flip decision maker"],
+    content: `
+      <p>The coin flip is the oldest decision-making tool in history. But our <strong>digital coin flip decision maker</strong> is better than a real coin — because you get a positive reason with every result.</p>
+
+      <h2>Why the Coin Flip Works</h2>
+      <p>When the coin is in the air, you instantly know which side you're hoping for. That's your real answer. The coin doesn't decide — it reveals what you already want.</p>
+
+      <h2>How to Use Our Coin Flip Tool</h2>
+      <p>Our <a href="/">Yes or No decision maker</a> works just like a coin flip but better. Type your question, get heads or tails, and receive an encouraging reason. No coin needed, no losing the coin under the couch.</p>
+
+      <h2>When to Flip a Coin</h2>
+      <ul>
+        <li>When both options are equally good</li>
+        <li>When you've been stuck for more than 10 minutes</li>
+        <li>When the decision is reversible anyway</li>
+        <li>When you just want to move on with your day</li>
+      </ul>
+
+      <p>Ready to flip? <a href="/">Use our free coin flip decision maker</a> now.</p>
+    `
+  },
+  {
+    slug: "pros-and-cons-list-maker",
+    title: "Pros and Cons List Maker: Make Better Decisions Faster",
+    metaDesc: "Use our free pros and cons list maker to weigh your options. Combined with our decision tool, you'll make better choices in minutes.",
+    date: "2026-06-24",
+    tags: ["pros and cons", "pros and cons list", "weigh options"],
+    content: `
+      <p>The pros and cons list is a classic decision-making tool — and for good reason. Writing down the advantages and disadvantages of each option clarifies your thinking. Our <strong>pros and cons list maker</strong> takes it a step further.</p>
+
+      <h2>How to Make a Pros and Cons List</h2>
+      <ol>
+        <li>Write your decision at the top (e.g., "Should I move to City A or City B?")</li>
+        <li>List all pros (advantages) of each option</li>
+        <li>List all cons (disadvantages) of each option</li>
+        <li>Assign weight to each item (1-10 based on importance)</li>
+        <li>Total the scores and compare</li>
+      </ol>
+
+      <h2>When the List Isn't Enough</h2>
+      <p>Sometimes both columns look equally convincing. That's <a href="/blog/what-is-decision-paralysis">decision paralysis</a>. When that happens, use our <a href="/">free decision tool</a> to break the tie with a positive, neutral perspective.</p>
+
+      <p>Our tool works great alongside a pros and cons list. Make your list first, then <a href="/">use the decision maker</a> for the final push.</p>
+    `
+  },
+  {
+    slug: "random-choice-generator",
+    title: "Random Choice Generator: Pick Randomly From Any List",
+    metaDesc: "Need a random choice generator? Pick from any list randomly with our free tool. Perfect for when you can't decide or want to leave it to chance.",
+    date: "2026-06-23",
+    tags: ["random choice generator", "random picker", "pick randomly"],
+    content: `
+      <p>Sometimes the best way to decide is to let randomness take the wheel. Our <strong>random choice generator</strong> picks from any list of options and gives you a positive reason for the result.</p>
+
+      <h2>How It Works</h2>
+      <p>Enter up to 10 options, click the button, and our tool randomly selects one with an encouraging reason. It's that simple. Use our <a href="/">Pick from List</a> mode to get started.</p>
+
+      <h2>When to Use a Random Choice Generator</h2>
+      <ul>
+        <li>When all options are equally good (analysis paralysis)</li>
+        <li>For fun decisions like "what movie should I watch?"</li>
+        <li>When you want to leave it up to fate</li>
+        <li>To settle disputes in a group</li>
+        <li>For team-building activities and icebreakers</li>
+      </ul>
+
+      <h2>Why It Works</h2>
+      <p>Random choice works because it bypasses your overthinking brain. And when you see the result, your immediate emotional reaction tells you what you really wanted all along. <a href="/">Try our random choice generator</a> and test it yourself.</p>
+    `
+  },
+  {
+    slug: "how-to-stop-second-guessing-yourself",
+    title: "How to Stop Second-Guessing Yourself After Every Decision",
+    metaDesc: "Do you second-guess every choice you make? Learn why this happens and how to stop second-guessing yourself with proven strategies and our free decision tool.",
+    date: "2026-06-23",
+    tags: ["stop second guessing", "decision regret", "confidence in decisions"],
+    content: `
+      <p>You finally made a decision. Good for you. But 5 minutes later, the doubt creeps in. "Did I make the right choice? What if I picked the wrong one?" This is <strong>second-guessing</strong>, and it's exhausting.</p>
+
+      <h2>Why We Second-Guess Ourselves</h2>
+      <ul>
+        <li><strong>Fear of regret</strong> — we think there's a perfect choice and we missed it</li>
+        <li><strong>Too many options</strong> — the more options you had, the more you wonder about the ones you didn't pick</li>
+        <li><strong>Low confidence</strong> — past bad decisions make us doubt future ones</li>
+      </ul>
+
+      <h2>How to Stop Second-Guessing</h2>
+
+      <h3>1. Commit Fully</h3>
+      <p>Once you decide, close the door. Don't keep looking at other options. Our <a href="/">decision maker tool</a> helps with this — the result is final and positive.</p>
+
+      <h3>2. Use the "No Regret" Framework</h3>
+      <p>If you made the best decision with the information you had at the time, there's nothing to regret. Hindsight is 20/20, but you're not a time traveler.</p>
+
+      <h3>3. Limit Your Review Time</h3>
+      <p>After deciding, give yourself 5 minutes to review, then move on. No re-opening the decision after that. Learn more in our guide on <a href="/blog/how-to-stop-overthinking-every-decision">how to stop overthinking</a>.</p>
+
+      <h3>4. Use a Reliable Decision Tool</h3>
+      <p>When you use our <a href="/">free decision helper</a>, you can trust the process. The positive-bias algorithm ensures you get an encouraging answer every time. No second-guessing needed.</p>
+
+      <p>Stop the cycle of doubt. <a href="/">Make a decision now</a> and commit to it.</p>
+    `
   }
 ];
 
