@@ -18,6 +18,7 @@ function Navbar({ user, setUser, t, toggleDarkMode, isDarkMode }) {
       
       <div className="nav-links">
         <Link to="/">{t('home')}</Link>
+        <Link to="/feed">Feed</Link>
         {user && <Link to="/history">{t('history')}</Link>}
         <Link to="/community">{t('community')}</Link>
         <Link to="/blog">Blog</Link>

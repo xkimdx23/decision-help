@@ -1,4 +1,5 @@
 const Decision = require('../models/Decision');
+const Vote = require('../models/Vote');
 const { makeDecisionWithBias, generateReason } = require('../utils/positiveBias');
 
 async function makeDecision(req, res) {
@@ -176,10 +177,97 @@ async function getPublicDecisions(req, res) {
   }
 }
 
+async function getVoteFeed(req, res) {
+  try {
+    const { exclude } = req.query;
+    const excludeIds = exclude ? exclude.split(',').filter(id => id.match(/^[0-9a-fA-F]{24}$/)) : [];
+
+    const match = {
+      is_public: true,
+      mode: { $in: ['this_or_that', 'pick_from_list'] }
+    };
+    if (excludeIds.length) match._id = { $nin: excludeIds };
+
+    const decisions = await Decision.aggregate([
+      { $match: match },
+      { $sample: { size: 1 } },
+      {
+        $lookup: {
+          from: 'votes',
+          let: { decisionId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$decision_id', '$$decisionId'] } } },
+            { $group: { _id: '$chosen_option', count: { $sum: 1 } } }
+          ],
+          as: 'vote_counts'
+        }
+      },
+      {
+        $addFields: {
+          votes: {
+            $arrayToObject: {
+              $map: {
+                input: '$vote_counts',
+                as: 'vc',
+                in: { k: '$$vc._id', v: '$$vc.count' }
+              }
+            }
+          }
+        }
+      },
+      { $project: { vote_counts: 0 } }
+    ]);
+
+    if (!decisions.length) {
+      return res.json({ decision: null });
+    }
+
+    res.json({ decision: decisions[0] });
+  } catch (error) {
+    console.error('Vote feed error:', error);
+    res.status(500).json({ error: 'Failed to fetch vote feed' });
+  }
+}
+
+async function castVote(req, res) {
+  try {
+    const { id } = req.params;
+    const { chosen_option, voter_id } = req.body;
+
+    const decision = await Decision.findById(id);
+    if (!decision) {
+      return res.status(404).json({ error: 'Decision not found' });
+    }
+
+    const vote = new Vote({
+      decision_id: id,
+      voter_id: voter_id || null,
+      chosen_option
+    });
+    await vote.save();
+
+    const voteCounts = await Vote.aggregate([
+      { $match: { decision_id: decision._id } },
+      { $group: { _id: '$chosen_option', count: { $sum: 1 } } }
+    ]);
+
+    const votes = {};
+    voteCounts.forEach(v => { votes[v._id] = v.count; });
+    const total = voteCounts.reduce((s, v) => s + v.count, 0);
+
+    res.json({ votes, total, your_vote: chosen_option });
+  } catch (error) {
+    console.error('Cast vote error:', error);
+    res.status(500).json({ error: 'Failed to cast vote' });
+  }
+}
+
 module.exports = {
   makeDecision,
   getHistory,
   deleteDecision,
   likeDecision,
-  getPublicDecisions
+  getPublicDecisions,
+  getVoteFeed,
+  castVote
 };

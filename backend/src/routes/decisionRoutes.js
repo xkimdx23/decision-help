@@ -10,6 +10,10 @@ router.post('/decide', safetyFilter, decisionController.makeDecision);
 // Public decisions browsing
 router.get('/decisions/public', decisionController.getPublicDecisions);
 
+// Vote feed
+router.get('/decisions/vote-feed', decisionController.getVoteFeed);
+router.post('/decisions/:id/vote', decisionController.castVote);
+
 // Protected routes
 router.get('/decisions/history', authMiddleware, decisionController.getHistory);
 router.delete('/decisions/:id', authMiddleware, decisionController.deleteDecision);

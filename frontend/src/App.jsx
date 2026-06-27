@@ -14,6 +14,7 @@ import About from './pages/About';
 import ForgotPassword from './pages/ForgotPassword';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
+import Feed from './pages/Feed';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import Navbar from './components/Navbar';
 
@@ -122,6 +123,7 @@ function App() {
               <Route path="/profile" element={user ? <Profile user={user} setUser={setUser} language={language} t={t} API_URL={API_URL} /> : <Navigate to="/login" />} />
               <Route path="/community" element={<Community language={language} t={t} API_URL={API_URL} />} />
               <Route path="/about" element={<About language={language} t={t} />} />
+              <Route path="/feed" element={<Feed API_URL={API_URL} />} />
               <Route path="/blog" element={<BlogList t={t} />} />
               <Route path="/blog/:slug" element={<BlogPost t={t} />} />
               <Route path="/forgot-password" element={<ForgotPassword t={t} API_URL={API_URL} />} />
