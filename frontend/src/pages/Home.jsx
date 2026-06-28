@@ -187,29 +187,35 @@ function Home({ user, language, t, API_URL }) {
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
       </Helmet>
       <div className="home">
-      {showConfetti && <div className="confetti">🎉✨🌟🎊</div>}
+      {showConfetti && (
+        <div className="confetti">
+          {Array.from({length: 12}).map((_, i) => (
+            <div key={i} className="confetti-piece" />
+          ))}
+        </div>
+      )}
       
       <h1 className="title">{t('make_decision')}</h1>
       <p className="subtitle">{t('positive_choices')}</p>
 
       <div className="daily-question" onClick={tryDailyQuestion}>
-        <span className="daily-label">📅 Daily Question</span>
+        <span className="daily-label">Daily Question</span>
         <span className="daily-text">{daily.question}</span>
         <span className="daily-try">Try it →</span>
       </div>
 
       <div className="mode-selector">
         <button className={mode === 'this_or_that' ? 'active' : ''} onClick={() => setMode('this_or_that')}>
-          🤔 {t('this_or_that')}
+          {t('this_or_that')}
         </button>
         <button className={mode === 'yes_no' ? 'active' : ''} onClick={() => setMode('yes_no')}>
-          ✅ {t('yes_or_no')}
+          {t('yes_or_no')}
         </button>
         <button className={mode === 'pick_from_list' ? 'active' : ''} onClick={() => setMode('pick_from_list')}>
-          📋 {t('pick_from_list')}
+          {t('pick_from_list')}
         </button>
         <button className={mode === 'wheel' ? 'active' : ''} onClick={() => setMode('wheel')}>
-          🎡 {t('spin_wheel')}
+          {t('spin_wheel')}
         </button>
       </div>
 
@@ -260,7 +266,7 @@ function Home({ user, language, t, API_URL }) {
                   required={index < 2}
                 />
                 {listOptions.length > 2 && (
-                  <button type="button" onClick={() => removeListOption(index)}>🗑️</button>
+                  <button type="button" onClick={() => removeListOption(index)}>×</button>
                 )}
               </div>
             ))}
@@ -273,13 +279,13 @@ function Home({ user, language, t, API_URL }) {
         )}
 
         <button type="submit" disabled={loading} className="submit-btn">
-          {loading ? '🤔 ...' : `🎲 ${t('help_me_decide')}`}
+          {loading ? '...' : t('help_me_decide')}
         </button>
       </form>
 
       {mode === 'wheel' && (
         <div className="wheel-section">
-          <h3 className="wheel-title">🎡 {t('spin_wheel')}</h3>
+          <h3 className="wheel-title">{t('spin_wheel')}</h3>
           <div className="wheel-options-input">
             {listOptions.map((opt, index) => (
               <div key={index} className="list-option-item">
@@ -291,7 +297,7 @@ function Home({ user, language, t, API_URL }) {
                   required={index < 2}
                 />
                 {listOptions.length > 2 && (
-                  <button type="button" onClick={() => removeListOption(index)}>🗑️</button>
+                  <button type="button" onClick={() => removeListOption(index)}>×</button>
                 )}
               </div>
             ))}
@@ -306,27 +312,27 @@ function Home({ user, language, t, API_URL }) {
         </div>
       )}
 
-      {error && <div className="error-message">⚠️ {error}</div>}
+      {error && <div className="error-message">{error}</div>}
 
       {result && (
         <div className="result-card" ref={resultRef}>
           {gifUrl && <img src={gifUrl} alt="Celebration" className="result-gif" />}
           <div className="result-content">
             <h2>{t('final_decision')}</h2>
-            <div className="result-option">✨ {result.result} ✨</div>
-            <p className="result-reason">💡 {result.reason}</p>
+            <div className="result-option">{result.result}</div>
+            <p className="result-reason">{result.reason}</p>
             <div className="result-actions">
-              <button onClick={() => { setResult(null); setGifUrl(''); setQuestion(''); setOptions(['', '']); setListOptions(['', '']); }} className="spin-again">
-                🎰 {t('spin_again')}
+              <button onClick={() => { setResult(null); setGifUrl(''); setQuestion(''); setOptions(['', '']); setListOptions(['', '']); }}>
+                {t('spin_again')}
               </button>
-              <button onClick={copyToClipboard} className="share-btn">
-                📋 {t('share')}
+              <button onClick={copyToClipboard}>
+                {t('share')}
               </button>
-              <button onClick={shareOnTwitter} className="share-btn" style={{ background:'#1DA1F2', color:'#fff', border:'none', padding:'12px 24px', borderRadius:'50px', cursor:'pointer', fontWeight:600 }}>
-                🐦 Tweet
+              <button onClick={shareOnTwitter} style={{ background:'#1DA1F2' }}>
+                Tweet
               </button>
-              <button onClick={downloadAsImage} className="share-btn" style={{ background:'#00b894', color:'#fff', border:'none', padding:'12px 24px', borderRadius:'50px', cursor:'pointer', fontWeight:600 }}>
-                📸 Save Image
+              <button onClick={downloadAsImage} style={{ background:'#2CB67D' }}>
+                Save Image
               </button>
             </div>
           </div>

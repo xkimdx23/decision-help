@@ -20,35 +20,35 @@ function About({ t }) {
       <h1>{t('about_title')}</h1>
       
       <div className="about-section">
-        <h2>🌟 {t('our_mission')}</h2>
+        <h2>{t('our_mission')}</h2>
         <p>{t('mission_text')}</p>
       </div>
       
       <div className="about-section">
-        <h2>✨ {t('how_it_works')}</h2>
+        <h2>{t('how_it_works')}</h2>
         <p>{t('how_it_works_text')}</p>
       </div>
       
       <div className="about-section">
-        <h2>🔒 {t('safety_first')}</h2>
+        <h2>{t('safety_first')}</h2>
         <p>{t('safety_text')}</p>
       </div>
       
       <div className="about-section">
-        <h2>🌍 {t('languages')}</h2>
+        <h2>{t('languages')}</h2>
         <p>{t('languages_text')}</p>
       </div>
       
       <div className="about-section">
-        <h2>💚 {t('positive_impact')}</h2>
+        <h2>{t('positive_impact')}</h2>
         <p>{t('impact_text')}</p>
       </div>
       <div className="about-section disclaimer-section">
-        <h2>⚖️ {t('disclaimer_title')}</h2>
+        <h2>{t('disclaimer_title')}</h2>
         <p>{t('disclaimer')}</p>
       </div>
       <div className="about-section donation-about-section">
-        <h2>☕ {t('donation_title')}</h2>
+        <h2>{t('donation_title')}</h2>
         <p>{t('donation_about')}</p>
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" rel="noopener noreferrer" className="donation-form">
           <input type="hidden" name="cmd" value="_xclick" />

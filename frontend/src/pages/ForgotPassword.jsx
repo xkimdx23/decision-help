@@ -33,7 +33,7 @@ function ForgotPassword({ t, API_URL }) {
         <meta name="robots" content="noindex" />
       </Helmet>
       <div className="auth-card">
-        <div className="auth-header">🔑 {t('reset_password')}</div>
+        <div className="auth-header">{t('reset_password')}</div>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label>{t('email')}</label>
@@ -45,10 +45,10 @@ function ForgotPassword({ t, API_URL }) {
               required
             />
           </div>
-          {error && <div className="auth-error">⚠️ {error}</div>}
-          {message && <div className="auth-success">✅ {message}</div>}
+          {error && <div className="auth-error">{error}</div>}
+          {message && <div className="auth-success">{message}</div>}
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? '...' : `📧 ${t('reset')}`}
+            {loading ? '...' : t('reset')}
           </button>
         </form>
         <p className="auth-footer">

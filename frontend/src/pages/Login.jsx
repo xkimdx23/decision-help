@@ -37,7 +37,7 @@ function Login({ setUser, t, API_URL }) {
         <meta name="robots" content="noindex" />
       </Helmet>
       <div className="auth-card">
-        <div className="auth-header">🔐 {t('login')}</div>
+        <div className="auth-header">{t('login')}</div>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label>{t('email')}</label>
@@ -60,9 +60,9 @@ function Login({ setUser, t, API_URL }) {
               minLength={6}
             />
           </div>
-          {error && <div className="auth-error">⚠️ {error}</div>}
+          {error && <div className="auth-error">{error}</div>}
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? '...' : `🚀 ${t('login')}`}
+            {loading ? '...' : t('login')}
           </button>
         </form>
         <p className="auth-footer">

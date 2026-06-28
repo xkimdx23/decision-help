@@ -29,7 +29,7 @@ function BlogList({ t }) {
         <meta name="twitter:card" content="summary_large_image" />
         <script type="application/ld+json">{JSON.stringify(blogSchema)}</script>
       </Helmet>
-      <h1 className="page-title">📝 Decision Help Blog</h1>
+      <h1 className="page-title">Decision Help Blog</h1>
       <p className="page-subtitle">Tips, strategies, and tools for better decision making</p>
       <div className="blog-list">
         {blogPosts.map(post => (

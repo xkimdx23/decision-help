@@ -34,7 +34,7 @@ function Community({ t, API_URL }) {
     }
   };
 
-  if (loading) return <div className="loading">⏳ {t('loading')}</div>;
+  if (loading) return <div className="loading">{t('loading')}</div>;
 
   return (
     <div className="community">
@@ -56,17 +56,17 @@ function Community({ t, API_URL }) {
         {decisions.map((decision) => (
           <div key={decision._id} className="community-card">
             <div className="community-user">
-              👤 {decision.user_id?.username || t('anonymous')}
+              {decision.user_id?.username || t('anonymous')}
             </div>
-            <div className="community-question">❓ {decision.question}</div>
-            <div className="community-result">✨ {decision.result} ✨</div>
-            <div className="community-reason">💡 {decision.reason}</div>
+            <div className="community-question">{decision.question}</div>
+            <div className="community-result">{decision.result}</div>
+            <div className="community-reason">{decision.reason}</div>
             <div className="community-footer">
               <button onClick={() => likeDecision(decision._id)} className="like-btn">
-                ❤️ {decision.likes_count}
+                {decision.likes_count} like{decision.likes_count !== 1 ? 's' : ''}
               </button>
               <span className="community-date">
-                📅 {new Date(decision.created_at).toLocaleDateString()}
+                {new Date(decision.created_at).toLocaleDateString()}
               </span>
             </div>
           </div>
@@ -75,9 +75,9 @@ function Community({ t, API_URL }) {
       
       {totalPages > 1 && (
         <div className="pagination">
-          <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>◀ {t('prev')}</button>
+          <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>{t('prev')}</button>
           <span>{t('page')} {page} / {totalPages}</span>
-          <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>{t('next')} ▶</button>
+          <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>{t('next')}</button>
         </div>
       )}
     </div>

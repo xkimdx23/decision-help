@@ -163,8 +163,8 @@ function VerifyEmail({ API_URL, t }) {
   return (
     <div className="verify-email">
       {status === 'verifying' && <p>{t('verifying_email')}</p>}
-      {status === 'success' && <p>✅ {t('email_verified')}</p>}
-      {status === 'error' && <p>❌ {t('email_verify_error')}</p>}
+      {status === 'success' && <p className="success">{t('email_verified')}</p>}
+      {status === 'error' && <p className="error">{t('email_verify_error')}</p>}
     </div>
   );
 }
@@ -197,8 +197,8 @@ function ResetPassword({ API_URL, t }) {
         />
         <button type="submit">{t('reset')}</button>
       </form>
-      {status === 'success' && <p className="success">✅ {t('password_reset_success')}</p>}
-      {status === 'error' && <p className="error">❌ {t('password_reset_error')}</p>}
+      {status === 'success' && <p className="success">{t('password_reset_success')}</p>}
+      {status === 'error' && <p className="error">{t('password_reset_error')}</p>}
     </div>
   );
 }

@@ -7,7 +7,7 @@ function hasBadWords(text) {
   return BAD_WORDS.some(w => lower.includes(w));
 }
 
-const COLORS = ['#6C5CE7', '#00B894', '#FDCB6E', '#E17055', '#0984E3', '#00CEC9', '#FD79A8', '#A29BFE', '#55EFC4', '#FAB1A0'];
+const COLORS = ['#4F6CF7', '#2CB67D', '#F0B34B', '#E8525C', '#3793E0', '#00CEC9', '#F07B5C', '#A8B8FF', '#55EFC4', '#FAB1A0'];
 
 function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3);
@@ -66,7 +66,7 @@ function DecisionWheel({ options, onResult }) {
     ctx.arc(cx, cy, 12, 0, 2 * Math.PI);
     ctx.fillStyle = '#fff';
     ctx.fill();
-    ctx.strokeStyle = '#6C5CE7';
+    ctx.strokeStyle = '#4F6CF7';
     ctx.lineWidth = 3;
     ctx.stroke();
 
@@ -75,7 +75,7 @@ function DecisionWheel({ options, onResult }) {
     ctx.lineTo(cx + r + 25, cy - 10);
     ctx.lineTo(cx + r + 25, cy + 10);
     ctx.closePath();
-    ctx.fillStyle = '#E17055';
+    ctx.fillStyle = '#F07B5C';
     ctx.fill();
   }, [numSlices, sliceAngle, options]);
 
@@ -134,7 +134,7 @@ function DecisionWheel({ options, onResult }) {
     <div className="wheel-container">
       <canvas ref={canvasRef} width="280" height="280" className="wheel-canvas" />
       <button onClick={spin} disabled={spinning || options.length < 2} className="wheel-spin-btn">
-        {spinning ? 'Spinning...' : '🎡 Spin the Wheel'}
+        {spinning ? 'Spinning...' : 'Spin the Wheel'}
       </button>
       {selectedIndex !== null && (
         <div className="wheel-result">

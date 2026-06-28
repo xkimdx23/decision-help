@@ -31,7 +31,7 @@ function History({ user, t, API_URL }) {
     }
   };
 
-  if (loading) return <div className="loading">⏳ {t('loading')}</div>;
+  if (loading) return <div className="loading">{t('loading')}</div>;
 
   return (
     <div className="history">
@@ -49,12 +49,12 @@ function History({ user, t, API_URL }) {
           <div className="history-list">
             {decisions.map((decision) => (
               <div key={decision._id} className="history-card">
-                <div className="history-question">❓ {decision.question}</div>
-                <div className="history-result">✅ {t('chose')}: {decision.result}</div>
-                <div className="history-reason">💡 {decision.reason}</div>
-                <div className="history-date">📅 {new Date(decision.created_at).toLocaleDateString()}</div>
+                <div className="history-question">{decision.question}</div>
+                <div className="history-result">{t('chose')}: {decision.result}</div>
+                <div className="history-reason">{decision.reason}</div>
+                <div className="history-date">{new Date(decision.created_at).toLocaleDateString()}</div>
                 <button onClick={() => deleteDecision(decision._id)} className="delete-btn">
-                  🗑️ {t('delete')}
+                  {t('delete')}
                 </button>
               </div>
             ))}
@@ -62,9 +62,9 @@ function History({ user, t, API_URL }) {
           
           {totalPages > 1 && (
             <div className="pagination">
-              <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>◀ {t('prev')}</button>
+              <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>{t('prev')}</button>
               <span>{t('page')} {page} / {totalPages}</span>
-              <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>{t('next')} ▶</button>
+              <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>{t('next')}</button>
             </div>
           )}
         </>

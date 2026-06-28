@@ -49,7 +49,7 @@ function Register({ setUser, t, API_URL }) {
         <meta name="robots" content="noindex" />
       </Helmet>
       <div className="auth-card">
-        <div className="auth-header">📝 {t('register')}</div>
+        <div className="auth-header">{t('register')}</div>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label>{t('username')}</label>
@@ -95,9 +95,9 @@ function Register({ setUser, t, API_URL }) {
               minLength={6}
             />
           </div>
-          {error && <div className="auth-error">⚠️ {error}</div>}
+          {error && <div className="auth-error">{error}</div>}
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? '...' : `🎉 ${t('register')}`}
+            {loading ? '...' : t('register')}
           </button>
         </form>
         <p className="auth-footer">

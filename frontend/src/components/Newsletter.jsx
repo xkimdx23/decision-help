@@ -23,7 +23,7 @@ function Newsletter({ API_URL }) {
 
   return (
     <div className="newsletter">
-      <h3 className="newsletter-title">📬 Stay Updated</h3>
+      <h3 className="newsletter-title">Stay Updated</h3>
       <p className="newsletter-text">New features, blog posts, and tips — once a week. No spam.</p>
       <form onSubmit={handleSubmit} className="newsletter-form">
         <input
@@ -38,8 +38,8 @@ function Newsletter({ API_URL }) {
           {status === 'loading' ? '...' : 'Subscribe'}
         </button>
       </form>
-      {status === 'success' && <p className="newsletter-msg success">✅ {message}</p>}
-      {status === 'error' && <p className="newsletter-msg error">⚠️ {message}</p>}
+      {status === 'success' && <p className="newsletter-msg success">{message}</p>}
+      {status === 'error' && <p className="newsletter-msg error">{message}</p>}
     </div>
   );
 }
