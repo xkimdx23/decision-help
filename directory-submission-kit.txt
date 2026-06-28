@@ -1,0 +1,33 @@
+# Decision Help — Directory Submission Kit
+
+## Taglines
+- Short: Free Decision Maker — Instant Clarity
+- Medium: Make Better Choices in Seconds — Free, No Signup
+- Long: Get instant positive answers for any decision. This or That, Yes or No, Pick from List, or Spin the Wheel. 12 languages, dark mode, free forever.
+
+## Categories by Directory
+- SaaSHub: Productivity → Decision Making / Life Assistant
+- AlternativeTo: Decision Making / Productivity / Self-Improvement
+- Geekflare: Online Tools → Productivity
+- Awesome Indie: Tools & Utilities / Productivity
+- HotHut: Productivity → Decision Tools
+
+## Short Description (1-2 sentences)
+Decision Help is a free online decision maker that gives instant, positive answers. Choose between options, get yes/no answers, pick from a list, or spin the wheel — all with encouraging reasons, in 12 languages, with no signup required.
+
+## Long Description
+Decision Help is a free, positive-bias decision maker tool that helps you break analysis paralysis instantly. Four modes — This or That, Yes or No, Pick from List, and Spin the Wheel — give you clear answers with encouraging reasons every time. Features include 12 languages with RTL support, dark mode, a community vote feed, decision history for logged-in users, and a safety filter. No signup required for basic use. Built for anyone who struggles with overthinking, decision fatigue, or second-guessing.
+
+## Key Features
+- 4 decision modes: This or That, Yes or No, Pick from List, Spin the Wheel
+- Positive-bias algorithm — every answer comes with an encouraging reason
+- 12 languages with full RTL support (including Arabic)
+- Dark mode for comfortable use at night
+- No signup required — use instantly, zero friction
+- Community vote feed — see how others decide
+- Decision history and profile for registered users
+- Safety filter blocks inappropriate content
+- Free forever
+
+## Pricing
+Free (AdSense-supported)

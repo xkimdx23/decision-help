@@ -17,6 +17,8 @@ import BlogPost from './pages/BlogPost';
 import Feed from './pages/Feed';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import Navbar from './components/Navbar';
 
@@ -130,7 +132,9 @@ function App() {
               <Route path="/blog/:slug" element={<BlogPost t={t} />} />
               <Route path="/privacy" element={<Privacy t={t} />} />
               <Route path="/terms" element={<Terms t={t} />} />
+              <Route path="/contact" element={<Contact t={t} />} />
               <Route path="/forgot-password" element={<ForgotPassword t={t} API_URL={API_URL} />} />
+              <Route path="*" element={<NotFound />} />
               <Route path="/verify-email/:token" element={<VerifyEmail API_URL={API_URL} t={t} />} />
               <Route path="/reset-password/:token" element={<ResetPassword API_URL={API_URL} t={t} />} />
             </Routes>
@@ -139,7 +143,8 @@ function App() {
             <p>{t('disclaimer')}</p>
             <div className="footer-links" style={{ marginBottom: 12, fontSize: '0.8rem' }}>
               <Link to="/privacy" style={{ color: 'inherit', textDecoration: 'underline', marginRight: 16 }}>Privacy Policy</Link>
-              <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline' }}>Terms of Service</Link>
+              <Link to="/terms" style={{ color: 'inherit', textDecoration: 'underline', marginRight: 16 }}>Terms of Service</Link>
+              <Link to="/contact" style={{ color: 'inherit', textDecoration: 'underline' }}>Contact</Link>
             </div>
             <div className="badge-row">
               <a href="https://pitchwall.co/product/decision-help?utm_source=badge" style={{ display: 'inline-flex' }}>
