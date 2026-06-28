@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import blogPosts from '../data/blogPosts';
 
-const AFFILIATE_TAG = 'decisionhel-20';
+const AFFILIATE_TAG = 'kimo007-20';
 
 const bookRecs = {
   default: { asin: 'B00A6U9S2K', title: 'Decisive: How to Make Better Choices in Life and Work', author: 'Chip Heath & Dan Heath' },
