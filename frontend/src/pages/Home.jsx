@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
 import { Helmet } from 'react-helmet-async';
@@ -6,6 +7,7 @@ import AdUnit from '../components/AdUnit';
 import DecisionWheel from '../components/DecisionWheel';
 import Newsletter from '../components/Newsletter';
 import { getDailyQuestion } from '../data/dailyQuestions';
+import blogPosts from '../data/blogPosts';
 
 function Home({ user, language, t, API_URL }) {
   const daily = getDailyQuestion();
@@ -342,6 +344,19 @@ function Home({ user, language, t, API_URL }) {
       {result && <AdUnit slot="7401516863" />}
 
       <Newsletter API_URL={API_URL} />
+
+      <div className="popular-articles">
+        <h3 className="popular-title">Popular Articles</h3>
+        <div className="popular-grid">
+          {blogPosts.slice(0, 4).map(post => (
+            <Link key={post.slug} to={`/blog/${post.slug}`} className="popular-card">
+              <span className="popular-tag">{post.tags[0]}</span>
+              <span className="popular-heading">{post.title}</span>
+              <span className="popular-read">Read →</span>
+            </Link>
+          ))}
+        </div>
+      </div>
 
       {showDonation && (
         <div className="donation-card">
