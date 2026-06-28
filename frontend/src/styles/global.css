@@ -1314,6 +1314,10 @@ body.dark-mode .title {
 .blog-content a { color: var(--primary); text-decoration: underline; }
 .blog-back { margin-top: 32px; }
 .blog-back a { color: var(--primary); text-decoration: none; font-weight: 600; }
+.blog-book { margin-top: 40px; padding: 24px; background: var(--primary-light); border-radius: 12px; }
+.blog-book h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--primary); }
+.blog-book a { color: var(--text); text-decoration: underline; }
+.affiliate-disclosure { font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; }
 
 /* Message toast */
 .message {
